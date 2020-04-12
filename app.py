@@ -26,12 +26,13 @@ def main():
                     flush=True)
                 file_size = get_file_size(full_path)
                 time.sleep(10)
-            print(
-                "{} - Moving '{}' to '{}/{}'".format(datetime.now().strftime("%b %d %H:%M:%S"), full_path, move_path,
-                                                     filename),
-                flush=True)
-            shutil.move(full_path, "{}/{}".format(move_path, filename))
-            file, extension = os.path.splitext(filename)
+
+            #     print(
+            #     "{} - Moving '{}' to '{}/{}'".format(datetime.now().strftime("%b %d %H:%M:%S"), full_path, move_path,
+            #                                          filename),
+            #     flush=True)
+            # shutil.move(full_path, "{}/{}".format(move_path, filename))
+            # file, extension = os.path.splitext(filename)
         time.sleep(10)
 
 
