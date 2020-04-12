@@ -35,6 +35,7 @@ def test_get_show_file_parts():
         "show": "Shameless (US)",
         "season": "Season 1",
         "episode_number": 1,
-        "episode_name": "Pilot HDTV"
+        "episode_name": "Pilot HDTV",
+        "filename": 'Shameless (US) - S01E01 - Pilot HDTV-720p.mp4'
     }
     assert expected == get_show_file_parts(filename)

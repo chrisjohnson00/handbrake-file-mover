@@ -35,5 +35,8 @@ def get_show_file_parts(filename):
         "show": extract_show_from_filename(filename),
         "season": extract_season_from_filename(filename),
         "episode_number": extract_episode_number_from_filename(filename),
-        "episode_name": extract_episode_name_from_filename(filename)
+        "episode_name": extract_episode_name_from_filename(filename),
+        "filename": filename
     }
+
+
