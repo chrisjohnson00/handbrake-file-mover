@@ -3,7 +3,7 @@ import consul
 import shutil
 import time
 from datetime import datetime
-from app.file_matcher import get_show_file_parts
+from app.file_matcher import get_show_file_parts, find_match, get_file_parts_for_directory
 
 CONFIG_PATH = "handbrake-file-mover"
 SLEEP_TIME = 10
@@ -63,19 +63,6 @@ def main():
                         target_dir),
                     flush=True)
         time.sleep(SLEEP_TIME)
-
-
-def get_file_parts_for_directory(directory):
-    files = []
-    for filename in os.listdir(directory):
-        files.append(get_show_file_parts(filename))
-    return files
-
-
-def find_match(source, files):
-    for file in files:
-        if file['episode_number'] == source['episode_number']:
-            return file
 
 
 def get_watch_directory():
