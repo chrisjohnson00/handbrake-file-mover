@@ -1,10 +1,12 @@
 from app.file_matcher import extract_show_from_filename, extract_episode_name_from_filename, \
     extract_episode_number_from_filename, extract_season_from_filename, get_show_file_parts
+import pytest
 
 
-def test_extract_show_from_filename():
-    filename = 'Shameless (US) - S01E01 - Pilot HDTV-720p.mp4'
-    assert "Shameless (US)" == extract_show_from_filename(filename)
+@pytest.mark.parametrize("test_input,expected", [('Shameless (US) - S01E01 - Pilot HDTV-720p.mp4', "Shameless (US)"),
+                                                 ('Downton.Abbey.S05E05.HDTV.x264-FTP.mp4', "Downton.Abbey")])
+def test_extract_show_from_filename(test_input, expected):
+    assert expected == extract_show_from_filename(test_input)
 
 
 def test_extract_season_from_filename():
