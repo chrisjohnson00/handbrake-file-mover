@@ -4,7 +4,7 @@ import pytest
 
 
 @pytest.mark.parametrize("test_input,expected", [('Shameless (US) - S01E01 - Pilot HDTV-720p.mp4', "Shameless (US)"),
-                                                 ('Downton.Abbey.S05E05.HDTV.x264-FTP.mp4', "Downton.Abbey")])
+                                                 ('Downton.Abbey.S05E05.HDTV.x264-FTP.mp4', "Downton Abbey")])
 def test_extract_show_from_filename(test_input, expected):
     assert expected == extract_show_from_filename(test_input)
 

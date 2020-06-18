@@ -15,7 +15,7 @@ def extract_show_from_filename(filename):
         if not matches or len(matches.groups()) < 3:
             raise Exception("{} split with no parts returned, we will die now".format(filename))
         else:
-            return matches.group(1)
+            return matches.group(1).replace('.',' ')
     else:
         return filename_split[0].strip()
 
