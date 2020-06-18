@@ -9,19 +9,22 @@ def test_extract_show_from_filename(test_input, expected):
     assert expected == extract_show_from_filename(test_input)
 
 
-def test_extract_season_from_filename():
-    filename = 'Shameless (US) - S01E01 - Pilot HDTV-720p.mp4'
-    assert "Season 1" == extract_season_from_filename(filename)
+@pytest.mark.parametrize("test_input,expected", [('Shameless (US) - S01E01 - Pilot HDTV-720p.mp4', "Season 1"),
+                                                 ('Downton.Abbey.S05E05.HDTV.x264-FTP.mp4', "Season 5")])
+def test_extract_season_from_filename(test_input, expected):
+    assert expected == extract_season_from_filename(test_input)
 
 
-def test_extract_episode_number_from_filename():
-    filename = 'Shameless (US) - S01E01 - Pilot HDTV-720p.mp4'
-    assert 1 == extract_episode_number_from_filename(filename)
+@pytest.mark.parametrize("test_input,expected", [('Shameless (US) - S01E01 - Pilot HDTV-720p.mp4', 1),
+                                                 ('Downton.Abbey.S05E05.HDTV.x264-FTP.mp4', 5)])
+def test_extract_episode_number_from_filename(test_input, expected):
+    assert expected == extract_episode_number_from_filename(test_input)
 
 
-def test_extract_episode_name_from_filename():
-    filename = 'Shameless (US) - S01E01 - Pilot HDTV-720p.mp4'
-    assert "Pilot HDTV" == extract_episode_name_from_filename(filename)
+@pytest.mark.parametrize("test_input,expected", [('Shameless (US) - S01E01 - Pilot HDTV-720p.mp4', "Pilot HDTV"),
+                                                 ('Downton.Abbey.S05E05.HDTV.x264-FTP.mp4', "HDTV.x264-FTP.mp4")])
+def test_extract_episode_name_from_filename(test_input, expected):
+    assert expected == extract_episode_name_from_filename(test_input)
 
 
 def test_get_show_file_parts():

@@ -1,4 +1,5 @@
 import os
+import re
 
 
 def extract_show_from_filename(filename):
@@ -6,27 +7,43 @@ def extract_show_from_filename(filename):
     Take input like 'Shameless (US) - S01E01 - Pilot HDTV-720p.mp4' and return it's show name
     """
     filename_split = filename.split('-')
+    # if the file doesn't match the standard pattern
     if len(filename_split) < 3:
-        raise Exception("{} split with no parts returned, we will die now".format(filename))
-    return filename_split[0].strip()
+        # try 'Downton.Abbey.S05E05.HDTV.x264-FTP.mp4' style file name
+        regex_pattern = r"(.+)\.(S\d{1,2}E\d{1,2})\.(.+)"
+        matches = re.match(regex_pattern, filename)
+        if not matches or len(matches.groups()) < 3:
+            raise Exception("{} split with no parts returned, we will die now".format(filename))
+        else:
+            return matches.group(1)
+    else:
+        return filename_split[0].strip()
 
 
 def extract_season_from_filename(filename):
-    filename_split = filename.split('-')
-    if len(filename_split) < 3:
-        raise Exception("{} split with no parts returned, we will die now".format(filename))
-    season_episode = filename_split[1].strip()
-    season_episode_split = season_episode.split('E')
+    season_episode_split = extract_season_episode_parts(filename)
     season_number = int(season_episode_split[0].strip().replace('S', ''))
     return "Season {}".format(season_number)
 
 
-def extract_episode_number_from_filename(filename):
+def extract_season_episode_parts(filename):
     filename_split = filename.split('-')
     if len(filename_split) < 3:
-        raise Exception("{} split with no parts returned, we will die now".format(filename))
-    season_episode = filename_split[1].strip()
+        # try 'Downton.Abbey.S05E05.HDTV.x264-FTP.mp4' style file name
+        regex_pattern = r"(.+)\.(S\d{1,2}E\d{1,2})\.(.+)"
+        matches = re.match(regex_pattern, filename)
+        if not matches or len(matches.groups()) < 3:
+            raise Exception("{} split with no parts returned, we will die now".format(filename))
+        else:
+            season_episode = matches.group(2)
+    else:
+        season_episode = filename_split[1].strip()
     season_episode_split = season_episode.split('E')
+    return season_episode_split
+
+
+def extract_episode_number_from_filename(filename):
+    season_episode_split = extract_season_episode_parts(filename)
     episode_number = int(season_episode_split[1].strip().replace('E', ''))
     return episode_number
 
@@ -34,8 +51,15 @@ def extract_episode_number_from_filename(filename):
 def extract_episode_name_from_filename(filename):
     filename_split = filename.split('-')
     if len(filename_split) < 3:
-        raise Exception("{} split with no parts returned, we will die now".format(filename))
-    return filename_split[2].strip()
+        # try 'Downton.Abbey.S05E05.HDTV.x264-FTP.mp4' style file name
+        regex_pattern = r"(.+)\.(S\d{1,2}E\d{1,2})\.(.+)"
+        matches = re.match(regex_pattern, filename)
+        if not matches or len(matches.groups()) < 3:
+            raise Exception("{} split with no parts returned, we will die now".format(filename))
+        else:
+            return matches.group(3)
+    else:
+        return filename_split[2].strip()
 
 
 def get_show_file_parts(filename):
