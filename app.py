@@ -6,7 +6,7 @@ from datetime import datetime
 from app.file_matcher import get_show_file_parts, find_match, get_file_parts_for_directory
 
 CONFIG_PATH = "handbrake-file-mover"
-SLEEP_TIME = 10
+SLEEP_TIME = 61
 
 
 def main():
