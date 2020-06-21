@@ -77,7 +77,7 @@ def move_tv_show(filename, full_path, move_path):
                     shutil.copyfile(full_path, target_file_full_path)
                     os.remove(original_file_full_path)
             except Exception as e:
-                raise Execption("Could not copy {}, encountered Exception {}".format(full_path, e))
+                raise Exception("Could not copy {}, encountered Exception {}".format(full_path, e))
         else:
             print(
                 "{} - Couldn't match any file in target directory '{}' for '{}'".format(
