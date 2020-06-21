@@ -6,7 +6,7 @@ def extract_show_from_filename(filename):
     """
     Take input like 'Shameless (US) - S01E01 - Pilot HDTV-720p.mp4' and return it's show name
     """
-    filename_split = filename.split('-')
+    filename_split = filename.split(' - ')
     # if the file doesn't match the standard pattern
     if len(filename_split) < 3:
         # try 'Downton.Abbey.S05E05.HDTV.x264-FTP.mp4' style file name
@@ -27,7 +27,7 @@ def extract_season_from_filename(filename):
 
 
 def extract_season_episode_parts(filename):
-    filename_split = filename.split('-')
+    filename_split = filename.split(' - ')
     if len(filename_split) < 3:
         # try 'Downton.Abbey.S05E05.HDTV.x264-FTP.mp4' style file name
         regex_pattern = r"(.+)\.(S\d{1,2}E\d{1,2})\.(.+)"
@@ -49,7 +49,7 @@ def extract_episode_number_from_filename(filename):
 
 
 def extract_episode_name_from_filename(filename):
-    filename_split = filename.split('-')
+    filename_split = filename.split(' - ')
     if len(filename_split) < 3:
         # try 'Downton.Abbey.S05E05.HDTV.x264-FTP.mp4' style file name
         regex_pattern = r"(.+)\.(S\d{1,2}E\d{1,2})\.(.+)"
