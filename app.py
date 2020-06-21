@@ -34,14 +34,17 @@ def main():
         move_type = message_body['move_type']
         full_path = os.path.join(directory, filename)
 
-        if move_type == "tv":
-            move_path = get_move_directory(move_type)
-            move_tv_show(filename, full_path, move_path)
-        elif move_type == "movies":
-            move_path = get_move_directory(move_type)
-            move_movie(filename, full_path, move_path)
+        if path.exists(full_path):
+            if move_type == "tv":
+                move_path = get_move_directory(move_type)
+                move_tv_show(filename, full_path, move_path)
+            elif move_type == "movies":
+                move_path = get_move_directory(move_type)
+                move_movie(filename, full_path, move_path)
+            else:
+                print("WARNING: There was no type in {}".format(message_body), flush=True)
         else:
-            print("WARNING: There was no type in {}".format(message_body), flush=True)
+            print("WARNING: {} is not found on disk".format(full_path))
 
 
 def move_movie(filename, full_path, move_path):
@@ -53,7 +56,7 @@ def move_tv_show(filename, full_path, move_path):
     source_file_parts = get_show_file_parts(filename)
     # move_path/show/season
     target_dir = "{}/{}/{}".format(move_path, source_file_parts['show'], source_file_parts['season'])
-    target_dir_exists = os.path.isdir(target_dir)
+    target_dir_exists = path.isdir(target_dir)
     # let's hope that the original directory is found!
     if target_dir_exists:
         print(
