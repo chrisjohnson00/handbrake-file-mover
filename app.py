@@ -44,7 +44,7 @@ def main():
             else:
                 print("WARNING: There was no type in {}".format(message_body), flush=True)
         else:
-            print("WARNING: {} is not found on disk".format(full_path))
+            print("WARNING: {} is not found on disk".format(full_path), flush=True)
 
 
 def move_movie(filename, full_path, move_path):
