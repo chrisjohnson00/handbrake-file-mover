@@ -5,6 +5,8 @@ from datetime import datetime
 from app.file_matcher import get_show_file_parts, find_match, get_file_parts_for_directory
 from kafka import KafkaConsumer
 from json import loads
+import os.path
+from os import path
 
 CONFIG_PATH = "handbrake-file-mover"
 SLEEP_TIME = 61
@@ -66,9 +68,16 @@ def move_tv_show(filename, full_path, move_path):
                     datetime.now().strftime("%b %d %H:%M:%S"), file_to_replace['filename'],
                     target_dir, source_file_parts['filename']),
                 flush=True)
-            # remove the original file, then move the new one in place
-            os.remove("{}/{}".format(target_dir, file_to_replace['filename']))
-            shutil.move(full_path, "{}/{}".format(target_dir, source_file_parts['filename']))
+            try:
+                target_file_full_path = "{}/{}".format(target_dir, source_file_parts['filename'])
+                original_file_full_path = "{}/{}".format(target_dir, file_to_replace['filename'])
+                if path.exists(target_file_full_path):
+                    shutil.move(full_path, target_file_full_path)
+                else:
+                    shutil.copyfile(full_path, target_file_full_path)
+                    os.remove(original_file_full_path)
+            except Exception as e:
+                raise Execption("Could not copy {}, encountered Exception {}".format(full_path, e))
         else:
             print(
                 "{} - Couldn't match any file in target directory '{}' for '{}'".format(
