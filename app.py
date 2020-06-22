@@ -13,7 +13,7 @@ SLEEP_TIME = 61
 
 
 def main():
-    print("Starting!!", flush=True)
+    print("INFO: Starting!!", flush=True)
     directory = "/watch"
 
     consumer = KafkaConsumer(
@@ -26,7 +26,7 @@ def main():
 
     for message in consumer:
         message_body = message.value
-        print("Processing new message {}".format(message_body), flush=True)
+        print("INFO: Processing new message {}".format(message_body), flush=True)
 
         # message value should be an object with {'filename':'value",'type','tv|movie'}
         # filename is from the kafka message value
@@ -45,6 +45,7 @@ def main():
                 print("WARNING: There was no type in {}".format(message_body), flush=True)
         else:
             print("WARNING: {} is not found on disk".format(full_path), flush=True)
+        print("INFO: Done processing message {}".format(message_body), flush=True)
 
 
 def move_movie(filename, full_path, move_path):
@@ -60,14 +61,14 @@ def move_tv_show(filename, full_path, move_path):
     # let's hope that the original directory is found!
     if target_dir_exists:
         print(
-            "{} - Looking for matching file for '{}' in target directory '{}'".format(
+            "INFO: {} - Looking for matching file for '{}' in target directory '{}'".format(
                 datetime.now().strftime("%b %d %H:%M:%S"), filename,
                 target_dir),
             flush=True)
         file_to_replace = find_match(source_file_parts, get_file_parts_for_directory(target_dir))
         if file_to_replace:
             print(
-                "{} - Replacing '{}' in target directory '{}' with '{}'".format(
+                "INFO: {} - Replacing '{}' in target directory '{}' with '{}'".format(
                     datetime.now().strftime("%b %d %H:%M:%S"), file_to_replace['filename'],
                     target_dir, source_file_parts['filename']),
                 flush=True)
@@ -83,12 +84,12 @@ def move_tv_show(filename, full_path, move_path):
                 raise Exception("Could not copy {}, encountered Exception {}".format(full_path, e))
         else:
             print(
-                "{} - Couldn't match any file in target directory '{}' for '{}'".format(
+                "INFO: {} - Couldn't match any file in target directory '{}' for '{}'".format(
                     datetime.now().strftime("%b %d %H:%M:%S"), target_dir, source_file_parts['filename']),
                 flush=True)
     else:
         print(
-            "{} - SKIPPING '{}', calculated target directory '{}' was not found!!".format(
+            "INFO: {} - SKIPPING '{}', calculated target directory '{}' was not found!!".format(
                 datetime.now().strftime("%b %d %H:%M:%S"), filename,
                 target_dir),
             flush=True)
@@ -109,7 +110,7 @@ def get_file_size(file):
 def get_config(key, config_path=CONFIG_PATH):
     if os.environ.get(key):
         return os.environ.get(key)
-    print("looking for {}/{} in consul".format(config_path, key), flush=True)
+    print("INFO: looking for {}/{} in consul".format(config_path, key), flush=True)
     c = consul.Consul()
     index, data = c.kv.get("{}/{}".format(config_path, key))
     return data['Value'].decode("utf-8")
