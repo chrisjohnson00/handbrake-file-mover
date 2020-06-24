@@ -7,13 +7,14 @@ from kafka import KafkaConsumer
 from json import loads
 import os.path
 from os import path
+from prometheus_client import Gauge, start_http_server
 
 CONFIG_PATH = "handbrake-file-mover"
-SLEEP_TIME = 61
 
 
 def main():
     print("INFO: Starting!!", flush=True)
+    start_http_server(8080)
     directory = "/watch"
 
     consumer = KafkaConsumer(
@@ -24,9 +25,11 @@ def main():
         group_id=get_consumer_group(),
         value_deserializer=lambda x: loads(x.decode('utf-8')))
 
+    file_discovered_metrics = Gauge('handbrake_job_move_file_in_process', 'File Mover Found A File')
     for message in consumer:
         message_body = message.value
         print("INFO: Processing new message {}".format(message_body), flush=True)
+        file_discovered_metrics.inc()
 
         # message value should be an object with {'filename':'value",'type','tv|movie'}
         # filename is from the kafka message value
@@ -46,6 +49,7 @@ def main():
         else:
             print("WARNING: {} is not found on disk".format(full_path), flush=True)
         print("INFO: Done processing message {}".format(message_body), flush=True)
+        file_discovered_metrics.dec()
 
 
 def move_movie(filename, full_path, move_path):
