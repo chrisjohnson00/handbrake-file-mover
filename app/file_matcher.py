@@ -27,7 +27,7 @@ def extract_season_from_filename(filename):
 
 
 def extract_season_episode_parts(filename):
-    filename_split = filename.split(' - ')
+    filename_split = filename.upper().split(' - ')
     if len(filename_split) < 3:
         # try 'Downton.Abbey.S05E05.HDTV.x264-FTP.mp4' style file name
         regex_pattern = r"(.+)\.(S\d{1,2}E\d{1,2})\.(.+)"
