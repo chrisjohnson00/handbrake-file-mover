@@ -1,12 +1,11 @@
 import os
 import consul
-import shutil
 from datetime import datetime
 from app.file_matcher import get_show_file_parts, find_match, get_file_parts_for_directory
 from kafka import KafkaConsumer
 from json import loads
+import subprocess
 import os.path
-from os import path
 from prometheus_client import Gauge, start_http_server
 
 CONFIG_PATH = "handbrake-file-mover"
@@ -68,7 +67,7 @@ def move_tv_show(filename, full_path, move_path):
     source_file_parts = get_show_file_parts(filename)
     # move_path/show/season
     target_dir = "{}/{}/{}".format(move_path, source_file_parts['show'], source_file_parts['season'])
-    target_dir_exists = path.isdir(target_dir)
+    target_dir_exists = os.path.isdir(target_dir)
     # let's hope that the original directory is found!
     if target_dir_exists:
         print(
@@ -86,7 +85,7 @@ def move_tv_show(filename, full_path, move_path):
             try:
                 target_file_full_path = "{}/{}".format(target_dir, source_file_parts['filename'])
                 original_file_full_path = "{}/{}".format(target_dir, file_to_replace['filename'])
-                if path.exists(target_file_full_path):
+                if os.path.exists(target_file_full_path):
                     move_file(full_path, target_file_full_path)
                 else:
                     copy_file(full_path, target_file_full_path)

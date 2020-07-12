@@ -5,24 +5,26 @@ import pytest
 
 @pytest.mark.parametrize("test_input,expected", [('Shameless (US) - S01E01 - Pilot HDTV-720p.mp4', "Shameless (US)"),
                                                  ('Downton.Abbey.S05E05.HDTV.x264-FTP.mp4', "Downton Abbey"), (
-                                                         'The Scooby-Doo Show - S01E06 - Scared a Lot in Camelot WEBRip-720p.mkv',
+                                               'The Scooby-Doo Show - S01E06 - Scared a Lot in Camelot WEBRip-720p.mkv',
                                                          'The Scooby-Doo Show')])
 def test_extract_show_from_filename(test_input, expected):
     assert expected == extract_show_from_filename(test_input)
 
 
 @pytest.mark.parametrize("test_input,expected", [('Shameless (US) - S01E01 - Pilot HDTV-720p.mp4', "Season 1"),
-                                                 ('Downton.Abbey.S05E05.HDTV.x264-FTP.mp4', "Season 5"), (
-                                                         'The Scooby-Doo Show - S01E06 - Scared a Lot in Camelot WEBRip-720p.mkv',
-                                                         'Season 1'), (
-                                                 'Spongebob SquarePants - s01e28 - SB-129 [480p] [h.265].mkv', 'Season 1')])
+                                                 ('Downton.Abbey.S05E05.HDTV.x264-FTP.mp4', "Season 5"),
+                                                 (
+                                               'The Scooby-Doo Show - S01E06 - Scared a Lot in Camelot WEBRip-720p.mkv',
+                                                 'Season 1'), (
+                                                         'Spongebob SquarePants - s01e28 - SB-129 [480p] [h.265].mkv',
+                                                         'Season 1')])
 def test_extract_season_from_filename(test_input, expected):
     assert expected == extract_season_from_filename(test_input)
 
 
 @pytest.mark.parametrize("test_input,expected", [('Shameless (US) - S01E01 - Pilot HDTV-720p.mp4', 1),
                                                  ('Downton.Abbey.S05E05.HDTV.x264-FTP.mp4', 5), (
-                                                         'The Scooby-Doo Show - S01E06 - Scared a Lot in Camelot WEBRip-720p.mkv',
+                                               'The Scooby-Doo Show - S01E06 - Scared a Lot in Camelot WEBRip-720p.mkv',
                                                          6)])
 def test_extract_episode_number_from_filename(test_input, expected):
     assert expected == extract_episode_number_from_filename(test_input)
