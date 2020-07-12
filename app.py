@@ -84,12 +84,14 @@ def move_tv_show(filename, full_path, move_path):
             try:
                 target_file_full_path = "{}/{}".format(target_dir, source_file_parts['filename'])
                 original_file_full_path = "{}/{}".format(target_dir, file_to_replace['filename'])
-                if os.path.exists(target_file_full_path):
+                if os.path.exists(target_file_full_path) and os.path.exists(full_path):
                     move_file(full_path, target_file_full_path)
-                else:
+                elif os.path.exists(full_path):
                     copy_file(full_path, target_file_full_path)
                     os.remove(original_file_full_path)
                     os.remove(full_path)
+                else:
+                    print("INFO - {} - {} was not found".format(datetime.now().strftime("%b %d %H:%M:%S"), full_path))
             except Exception as e:
                 raise Exception("Could not copy {}, encountered Exception {}".format(full_path, e))
         else:
