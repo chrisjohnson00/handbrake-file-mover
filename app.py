@@ -130,13 +130,15 @@ def get_config(key, config_path=CONFIG_PATH):
 
 def copy_file(src, dest):
     command = ["cp", src, dest]
-    print("File copy command called {}".format(command), flush=True)
+    print("INFO: {} - File copy command called {}".format(datetime.now().strftime("%b %d %H:%M:%S"), command),
+          flush=True)
     subprocess.run(command, check=True)
 
 
 def move_file(src, dest):
     command = ["mv", src, dest]
-    print("File move command called {}".format(command), flush=True)
+    print("INFO: {} - File move command called {}".format(datetime.now().strftime("%b %d %H:%M:%S"), command),
+          flush=True)
     subprocess.run(command, check=True)
 
 
