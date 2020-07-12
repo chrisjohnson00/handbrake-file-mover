@@ -50,7 +50,6 @@ def main():
             move_movie(filename, full_path, move_path)
         elif move_type == "to_encode":
             copy_for_encoding(message_body)
-            exit("Um, I'm still testing")
         else:
             print("WARNING: There was an invalid move_type in {}".format(message_body), flush=True)
 
