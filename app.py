@@ -91,17 +91,17 @@ def move_tv_show(filename, full_path, move_path):
                     os.remove(original_file_full_path)
                     os.remove(full_path)
                 else:
-                    print("INFO: {} - {} was not found".format(datetime.now().strftime("%b %d %H:%M:%S"), full_path))
+                    print("WARN: {} - {} was not found".format(datetime.now().strftime("%b %d %H:%M:%S"), full_path))
             except Exception as e:
                 raise Exception("Could not copy {}, encountered Exception {}".format(full_path, e))
         else:
             print(
-                "INFO: {} - Couldn't match any file in target directory '{}' for '{}'".format(
+                "WARN: {} - Couldn't match any file in target directory '{}' for '{}'".format(
                     datetime.now().strftime("%b %d %H:%M:%S"), target_dir, source_file_parts['filename']),
                 flush=True)
     else:
         print(
-            "INFO: {} - SKIPPING '{}', calculated target directory '{}' was not found!!".format(
+            "WARN: {} - SKIPPING '{}', calculated target directory '{}' was not found!!".format(
                 datetime.now().strftime("%b %d %H:%M:%S"), filename,
                 target_dir),
             flush=True)
