@@ -8,16 +8,22 @@ def extract_show_from_filename(filename):
     """
     filename_split = filename.split(' - ')
     # if the file doesn't match the standard pattern
-    if len(filename_split) < 3:
+    if len(filename_split) != 3:
         # try 'Downton.Abbey.S05E05.HDTV.x264-FTP.mp4' style file name
-        regex_pattern = r"(.+)\.(S\d{1,2}E\d{1,2})\.(.+)"
+        regex_pattern = r"(.+)(S\d{1,2}E\d{1,2})(.+)"
         matches = re.match(regex_pattern, filename)
         if not matches or len(matches.groups()) < 3:
             raise Exception("{} split with no parts returned, we will die now".format(filename))
         else:
-            return matches.group(1).replace('.', ' ')
+            ret_value = matches.group(1).replace('.', ' ')
+            return replace_last(ret_value, " - ", "").strip()
     else:
         return filename_split[0].strip()
+
+
+def replace_last(source_string, replace_what, replace_with):
+    head, _sep, tail = source_string.rpartition(replace_what)
+    return head + replace_with + tail
 
 
 def extract_season_from_filename(filename):
@@ -28,9 +34,9 @@ def extract_season_from_filename(filename):
 
 def extract_season_episode_parts(filename):
     filename_split = filename.upper().split(' - ')
-    if len(filename_split) < 3:
+    if len(filename_split) != 3:
         # try 'Downton.Abbey.S05E05.HDTV.x264-FTP.mp4' style file name
-        regex_pattern = r"(.+)\.(S\d{1,2}E\d{1,2})\.(.+)"
+        regex_pattern = r"(.+)(S\d{1,2}E\d{1,2})(.+)"
         matches = re.match(regex_pattern, filename)
         if not matches or len(matches.groups()) < 3:
             raise Exception("{} split with no parts returned, we will die now".format(filename))
@@ -50,14 +56,21 @@ def extract_episode_number_from_filename(filename):
 
 def extract_episode_name_from_filename(filename):
     filename_split = filename.split(' - ')
-    if len(filename_split) < 3:
+    if len(filename_split) != 3:
         # try 'Downton.Abbey.S05E05.HDTV.x264-FTP.mp4' style file name
-        regex_pattern = r"(.+)\.(S\d{1,2}E\d{1,2})\.(.+)"
+        regex_pattern = r"(.+)(S\d{1,2}E\d{1,2})(.+)"
         matches = re.match(regex_pattern, filename)
         if not matches or len(matches.groups()) < 3:
             raise Exception("{} split with no parts returned, we will die now".format(filename))
         else:
-            return matches.group(3)
+            ret_value = matches.group(3)
+            # if it starts with a `.` then remove it
+            if ret_value[0] == ".":
+                ret_value = ret_value[1:len(ret_value)]
+            # if it starts ith " - " then remove it
+            if ret_value[0:3] == " - ":
+                ret_value = ret_value[3:len(ret_value)]
+            return ret_value
     else:
         return filename_split[2].strip()
 
