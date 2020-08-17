@@ -55,6 +55,8 @@ def main():
 
         print("INFO: Done processing message {}".format(message_body), flush=True)
         file_discovered_metrics.labels(move_type).dec()
+        # force commit
+        consumer.commit_async()
 
 
 def move_movie(filename, full_path, move_path):
