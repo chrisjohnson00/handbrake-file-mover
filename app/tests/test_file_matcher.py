@@ -32,7 +32,8 @@ def test_extract_season_from_filename(test_input, expected):
                                                          'The Scooby-Doo Show - S01E06 - Scared a Lot in Camelot WEBRip-720p.mkv',  # noqa: E501
                                                          6), (
                                                          'Home Movie - The Princess Bride - S01E09 - Chapter Nine - Have Fun Storming The Castle! WEBDL-1080p.mkv',  # noqa: E501
-                                                         9)])
+                                                         9),
+                                                 ('SpongeBob SquarePants - S10E01 - Extreme Spots HDTV-720p.mkv', 1)])
 def test_extract_episode_number_from_filename(test_input, expected):
     assert expected == extract_episode_number_from_filename(test_input)
 
