@@ -8,7 +8,9 @@ import pytest
                                                          'The Scooby-Doo Show - S01E06 - Scared a Lot in Camelot WEBRip-720p.mkv',  # noqa: E501
                                                          'The Scooby-Doo Show'), (
                                                          'Home Movie - The Princess Bride - S01E09 - Chapter Nine - Have Fun Storming The Castle! WEBDL-1080p.mkv',  # noqa: E501
-                                                         "Home Movie - The Princess Bride")])
+                                                         "Home Movie - The Princess Bride"),
+                                                 ('SpongeBob SquarePants - S10E30-E31 - Company Picnic + Pull Up a Barrel HDTV-720p.mkv',  # noqa: E501
+                                                 "SpongeBob SquarePants")])
 def test_extract_show_from_filename(test_input, expected):
     assert expected == extract_show_from_filename(test_input)
 
@@ -22,7 +24,10 @@ def test_extract_show_from_filename(test_input, expected):
                                                          'Season 1'),
                                                  (
                                                          'Home Movie - The Princess Bride - S01E09 - Chapter Nine - Have Fun Storming The Castle! WEBDL-1080p.mkv',  # noqa: E501
-                                                         "Season 1")])
+                                                         "Season 1"),
+                                                 (
+                                                 'SpongeBob SquarePants - S10E30-E31 - Company Picnic + Pull Up a Barrel HDTV-720p.mkv',  # noqa: E501
+                                                 'Season 10')])
 def test_extract_season_from_filename(test_input, expected):
     assert expected == extract_season_from_filename(test_input)
 
@@ -44,7 +49,9 @@ def test_extract_episode_number_from_filename(test_input, expected):
                                   'The Scooby-Doo Show - S01E06 - Scared a Lot in Camelot WEBRip-720p.mkv',
                                   'Scared a Lot in Camelot WEBRip-720p.mkv'), (
                                   'Home Movie - The Princess Bride - S01E09 - Chapter Nine - Have Fun Storming The Castle! WEBDL-1080p.mkv',  # noqa: E501
-                                  "Chapter Nine - Have Fun Storming The Castle! WEBDL-1080p.mkv")])
+                                  "Chapter Nine - Have Fun Storming The Castle! WEBDL-1080p.mkv"),
+                          ('SpongeBob SquarePants - S10E30-E31 - Company Picnic + Pull Up a Barrel HDTV-720p.mkv',
+                           "Company Picnic + Pull Up a Barrel HDTV-720p.mkv")])
 def test_extract_episode_name_from_filename(test_input, expected):
     assert expected == extract_episode_name_from_filename(test_input)
 

@@ -50,7 +50,7 @@ def extract_season_episode_parts(filename):
 
 def extract_episode_number_from_filename(filename):
     season_episode_split = extract_season_episode_parts(filename)
-    episode_number = int(season_episode_split[1].strip().replace('E', ''))
+    episode_number = int(season_episode_split[1].strip().replace('E', '').replace('-', ''))
     return episode_number
 
 
