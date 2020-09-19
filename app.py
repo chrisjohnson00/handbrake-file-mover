@@ -36,22 +36,21 @@ def main():
         print("INFO: Processing new message {}".format(message_body), flush=True)
         file_discovered_metrics.labels(move_type).inc()
 
-        if move_type == "tv":
-            # filename is from the kafka message value
-            filename = message_body['filename']
-            full_path = os.path.join(directory, filename)
+        # filename is from the kafka message value
+        filename = message_body['filename']
+        full_path = os.path.join(directory, filename)
+        if os.path.exists(full_path):
             move_path = get_move_directory(move_type)
-            move_tv_show(filename, full_path, move_path)
-        elif move_type == "movies":
-            # filename is from the kafka message value
-            filename = message_body['filename']
-            full_path = os.path.join(directory, filename)
-            move_path = get_move_directory(move_type)
-            move_movie(filename, full_path, move_path)
-        elif move_type == "to_encode":
-            copy_for_encoding(message_body)
+            if move_type == "tv":
+                move_tv_show(filename, full_path, move_path)
+            elif move_type == "movies":
+                move_movie(filename, full_path, move_path)
+            elif move_type == "to_encode":
+                copy_for_encoding(message_body)
+            else:
+                print("WARNING: There was an invalid move_type in {}".format(message_body), flush=True)
         else:
-            print("WARNING: There was an invalid move_type in {}".format(message_body), flush=True)
+            print("{} doesn't exist on disk, skipping processing".format(full_path))
 
         print("INFO: Done processing message {}".format(message_body), flush=True)
         file_discovered_metrics.labels(move_type).dec()
