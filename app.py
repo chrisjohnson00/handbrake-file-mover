@@ -43,10 +43,11 @@ def main():
         elif 'source_full_path' in message_body:
             full_path = message_body['source_full_path']
         if os.path.exists(full_path):
-            move_path = get_move_directory(move_type)
             if move_type == "tv":
+                move_path = get_move_directory(move_type)
                 move_tv_show(filename, full_path, move_path)
             elif move_type == "movies":
+                move_path = get_move_directory(move_type)
                 move_movie(filename, full_path, move_path)
             elif move_type == "to_encode":
                 copy_for_encoding(message_body)
