@@ -36,9 +36,12 @@ def main():
         print("INFO: Processing new message {}".format(message_body), flush=True)
         file_discovered_metrics.labels(move_type).inc()
 
-        # filename is from the kafka message value
-        filename = message_body['filename']
-        full_path = os.path.join(directory, filename)
+        if message_body.has_key('filename'):
+            # filename is from the kafka message value
+            filename = message_body['filename']
+            full_path = os.path.join(directory, filename)
+        elif message_body.has_key('source_full_path'):
+            full_path = message_body['source_full_path']
         if os.path.exists(full_path):
             move_path = get_move_directory(move_type)
             if move_type == "tv":
