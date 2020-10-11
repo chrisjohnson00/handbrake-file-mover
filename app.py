@@ -7,7 +7,6 @@ from json import loads
 import subprocess
 import os.path
 from prometheus_client import Gauge, start_http_server
-import sys
 
 CONFIG_PATH = "handbrake-file-mover"
 
