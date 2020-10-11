@@ -7,6 +7,7 @@ from json import loads
 import subprocess
 import os.path
 from prometheus_client import Gauge, start_http_server
+import sys
 
 CONFIG_PATH = "handbrake-file-mover"
 
@@ -43,14 +44,27 @@ def main():
         elif 'source_full_path' in message_body:
             full_path = message_body['source_full_path']
         if os.path.exists(full_path):
+            # move type tv is used when a tv show is encoded and needs to be put back into Plex
+            # this will replace a matching file
             if move_type == "tv":
                 move_path = get_move_directory(move_type)
                 move_tv_show(filename, full_path, move_path)
+            # move type movies just puts the movie into plex
             elif move_type == "movies":
                 move_path = get_move_directory(move_type)
                 move_movie(filename, full_path, move_path)
+            # to encode is from the download webhook
             elif move_type == "to_encode":
-                copy_for_encoding(message_body)
+                # first check to see if the file is already in the needed x265 format, if so, skip encoding
+                mediainfo = get_mediainfo(full_path)
+                encoded_library_name = None
+                for track in mediainfo['media']['track']:
+                    if track['@type'] == 'Video':
+                        encoded_library_name = track['Encoded_Library_Name']
+                if encoded_library_name and encoded_library_name != 'x265':
+                    copy_for_encoding(message_body)
+                else:
+                    print("INFO: {} is x265 already, skipping encoding".format(full_path), flush=True)
             else:
                 print("WARNING: There was an invalid move_type in {}".format(message_body), flush=True)
         else:
@@ -60,6 +74,18 @@ def main():
         file_discovered_metrics.labels(move_type).dec()
         # force commit
         consumer.commit_async()
+
+
+def get_mediainfo(full_path):
+    """
+    This method calls to mediainfo to get all the details of the media file and returns a dict object
+    :param full_path: The path to the file
+    :return: The mediainfo output as a dict
+    """
+    command = ['mediainfo', '-f', '--Output=JSON', full_path]
+    completed_process = subprocess.run(command, check=True, capture_output=True)
+    mediainfo_json = loads(completed_process.stdout)
+    return mediainfo_json
 
 
 def move_movie(filename, full_path, move_path):
