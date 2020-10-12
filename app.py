@@ -62,7 +62,7 @@ def main():
                         print("DEBUG: mediainfo: {}".format(track))
                         if 'Encoded_Library_Name' in track:
                             encoded_library_name = track['Encoded_Library_Name']
-                        elif 'CodecId' in track:
+                        elif 'CodecID' in track:
                             encoded_library_name = track['CodecId']
                         print("DEBUG: encoding {}".format(encoded_library_name))
                 if encoded_library_name and encoded_library_name != 'x265':
