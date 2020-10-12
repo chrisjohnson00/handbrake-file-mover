@@ -61,6 +61,7 @@ def main():
                     if track['@type'] == 'Video':
                         encoded_library_name = track['Encoded_Library_Name']
                 if encoded_library_name and encoded_library_name != 'x265':
+                    print("INFO: {} is {} and will be re-encoded".format(full_path, encoded_library_name), flush=True)
                     copy_for_encoding(message_body)
                 else:
                     print("INFO: {} is x265 already, skipping encoding".format(full_path), flush=True)
