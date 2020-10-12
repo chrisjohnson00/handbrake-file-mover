@@ -59,7 +59,11 @@ def main():
                 encoded_library_name = None
                 for track in mediainfo['media']['track']:
                     if track['@type'] == 'Video':
-                        encoded_library_name = track['Encoded_Library_Name']
+                        print("DEBUG: mediainfo: {}".format(track))
+                        if 'Encoded_Library_Name' in track:
+                            encoded_library_name = track['Encoded_Library_Name']
+                        elif 'CodecId' in track:
+                            encoded_library_name = track['CodecId']
                 if encoded_library_name and encoded_library_name != 'x265':
                     print("INFO: {} is {} and will be re-encoded".format(full_path, encoded_library_name), flush=True)
                     copy_for_encoding(message_body)
