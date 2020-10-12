@@ -8,6 +8,7 @@ jobs:
     - stage: build branch
       script:
         - set -e
+        - docker pull chrisjohnson00/handbrake-file-mover:main
         - docker build -t chrisjohnson00/handbrake-file-mover -f Dockerfile .
         - docker run chrisjohnson00/handbrake-file-mover python -m flake8
         - docker run chrisjohnson00/handbrake-file-mover python -m pytest
