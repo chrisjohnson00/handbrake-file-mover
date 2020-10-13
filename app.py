@@ -63,7 +63,7 @@ def main():
                         if 'Encoded_Library_Name' in track:
                             encoded_library_name = track['Encoded_Library_Name']
                         elif 'CodecID' in track:
-                            encoded_library_name = track['CodecId']
+                            encoded_library_name = track['CodecID']
                         print("DEBUG: encoding {}".format(encoded_library_name))
                 if encoded_library_name and encoded_library_name != 'x265':
                     print("INFO: {} is {} and will be re-encoded".format(full_path, encoded_library_name), flush=True)
