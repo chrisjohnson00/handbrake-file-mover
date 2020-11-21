@@ -6,7 +6,7 @@ idna==2.9
 importlib-metadata==2.0.0
 kafka-python==2.0.1
 mccabe==0.6.1
-more-itertools==8.2.0
+more-itertools==8.6.0
 packaging==20.3
 pluggy==0.13.1
 prometheus-client==0.8.0
