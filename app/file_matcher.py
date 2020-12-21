@@ -1,5 +1,6 @@
 import os
 import re
+from pathlib import Path
 
 
 def extract_show_from_filename(filename):
@@ -102,3 +103,22 @@ def find_match(source, files):
     for file in files:
         if file['episode_number'] == source['episode_number']:
             return file
+
+
+def find_show_directory(base_path, show_name):
+    """
+    Well... it turns out that some files download with "Game of Thrones" while the directory is actually "Game Of
+    Thrones", and damn it... it doesn't match... this makes it match!
+    :param base_path:
+    :param show_name:
+    :return:
+    """
+    shows = []
+    p = Path(base_path)
+    for x in p.iterdir():
+        if x.is_dir():
+            shows.append(str(x))
+    for show in shows:
+        if "{}/{}".format(base_path, show_name.lower()) == show.lower():
+            return show
+    return None
