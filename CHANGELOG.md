@@ -1,5 +1,13 @@
 # Changelog
 
+## [v2.1.3](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.1.3) (2020-12-22)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.1.2...v2.1.3)
+
+**Fixed bugs:**
+
+- fix: Correcting an issue with mis-matched directories because of casing [\#39](https://github.com/chrisjohnson00/handbrake-file-mover/pull/39) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
 ## [v2.1.2](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.1.2) (2020-12-21)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.1.1...v2.1.2)
