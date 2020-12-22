@@ -1,5 +1,5 @@
 from app.file_matcher import extract_show_from_filename, extract_episode_name_from_filename, \
-    extract_episode_number_from_filename, extract_season_from_filename, get_show_file_parts
+    extract_episode_number_from_filename, extract_season_from_filename, get_show_file_parts, find_show_directory
 import pytest
 
 
@@ -9,8 +9,9 @@ import pytest
                                                          'The Scooby-Doo Show'), (
                                                          'Home Movie - The Princess Bride - S01E09 - Chapter Nine - Have Fun Storming The Castle! WEBDL-1080p.mkv',  # noqa: E501
                                                          "Home Movie - The Princess Bride"),
-                                                 ('SpongeBob SquarePants - S10E30-E31 - Company Picnic + Pull Up a Barrel HDTV-720p.mkv',  # noqa: E501
-                                                 "SpongeBob SquarePants")])
+                                                 (
+                                                         'SpongeBob SquarePants - S10E30-E31 - Company Picnic + Pull Up a Barrel HDTV-720p.mkv',  # noqa: E501
+                                                         "SpongeBob SquarePants")])
 def test_extract_show_from_filename(test_input, expected):
     assert expected == extract_show_from_filename(test_input)
 
@@ -26,8 +27,8 @@ def test_extract_show_from_filename(test_input, expected):
                                                          'Home Movie - The Princess Bride - S01E09 - Chapter Nine - Have Fun Storming The Castle! WEBDL-1080p.mkv',  # noqa: E501
                                                          "Season 1"),
                                                  (
-                                                 'SpongeBob SquarePants - S10E30-E31 - Company Picnic + Pull Up a Barrel HDTV-720p.mkv',  # noqa: E501
-                                                 'Season 10')])
+                                                         'SpongeBob SquarePants - S10E30-E31 - Company Picnic + Pull Up a Barrel HDTV-720p.mkv',  # noqa: E501
+                                                         'Season 10')])
 def test_extract_season_from_filename(test_input, expected):
     assert expected == extract_season_from_filename(test_input)
 
@@ -38,7 +39,8 @@ def test_extract_season_from_filename(test_input, expected):
                                                          6), (
                                                          'Home Movie - The Princess Bride - S01E09 - Chapter Nine - Have Fun Storming The Castle! WEBDL-1080p.mkv',  # noqa: E501
                                                          9),
-                                                 ('SpongeBob SquarePants - S10E30-E31 - Company Picnic + Pull Up a Barrel HDTV-720p.mkv', 30)])  # noqa: E501
+                                                 (
+                                                         'SpongeBob SquarePants - S10E30-E31 - Company Picnic + Pull Up a Barrel HDTV-720p.mkv', 30)])  # noqa: E501
 def test_extract_episode_number_from_filename(test_input, expected):
     assert expected == extract_episode_number_from_filename(test_input)
 
@@ -73,3 +75,12 @@ def test_get_show_file_parts():
         "filename": 'Shameless (US) - S01E01 - Pilot HDTV-720p.mp4'
     }
     assert expected == get_show_file_parts(filename)
+
+
+def test_find_show_directory(fs):
+    shows = ['Game Of Thrones', 'The Man In The Castle', "Yo Gabba gabba"]
+    base_path = "/tv"
+    for show in shows:
+        fs.create_dir("{}/{}".format(base_path, show))
+    path = find_show_directory(base_path, "Game of Thrones")
+    assert path == "/tv/Game Of Thrones"

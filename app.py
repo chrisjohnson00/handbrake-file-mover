@@ -1,7 +1,7 @@
 import os
 import consul
 from datetime import datetime
-from app.file_matcher import get_show_file_parts, find_match, get_file_parts_for_directory
+from app.file_matcher import get_show_file_parts, find_match, get_file_parts_for_directory, find_show_directory
 from kafka import KafkaConsumer
 from json import loads
 import subprocess
@@ -101,7 +101,7 @@ def move_tv_show(filename, full_path, move_path):
     # break up the file into it's parts for easy comparison to original file to replace
     source_file_parts = get_show_file_parts(filename)
     # move_path/show/season
-    target_dir = "{}/{}/{}".format(move_path, source_file_parts['show'], source_file_parts['season'])
+    target_dir = "{}/{}".format(find_show_directory(move_path, source_file_parts['show']), source_file_parts['season'])
     target_dir_exists = os.path.isdir(target_dir)
     # let's hope that the original directory is found!
     if target_dir_exists:
