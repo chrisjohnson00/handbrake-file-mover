@@ -10,3 +10,7 @@ Export the path to your in/out dir, then run the app
 Running tests
 
     python -m pytest
+
+PyPi Dependency updates
+
+    pip install --upgrade kafka-python prometheus-client
