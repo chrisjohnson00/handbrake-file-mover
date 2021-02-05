@@ -7,6 +7,7 @@ from json import loads
 import subprocess
 import os.path
 from prometheus_client import Gauge, start_http_server
+from pathlib import Path
 
 CONFIG_PATH = "handbrake-file-mover"
 
@@ -50,8 +51,13 @@ def main():
                 move_tv_show(filename, full_path, move_path)
             # move type movies just puts the movie into plex
             elif move_type == "movies":
-                move_path = get_move_directory(move_type)
-                move_movie(filename, full_path, move_path)
+                move_base_path = get_move_directory(move_type)
+                # Add the movie name to the move path
+                move_path = "{}/{}".format(move_base_path, Path(filename).stem)
+                # create the move path
+                os.makedirs(move_path)
+                # move the file!
+                move_file(full_path, "{}/{}".format(move_path, filename))
             # to encode is from the download webhook
             elif move_type == "to_encode":
                 # first check to see if the file is already in the needed x265 format, if so, skip encoding
@@ -91,10 +97,6 @@ def get_mediainfo(full_path):
     completed_process = subprocess.run(command, check=True, capture_output=True)
     mediainfo_json = loads(completed_process.stdout)
     return mediainfo_json
-
-
-def move_movie(filename, full_path, move_path):
-    move_file(full_path, "{}/{}".format(move_path, filename))
 
 
 def move_tv_show(filename, full_path, move_path):
