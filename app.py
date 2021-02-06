@@ -15,7 +15,7 @@ CONFIG_PATH = "handbrake-file-mover"
 def main():
     print("INFO: Starting!!", flush=True)
     start_http_server(8080)
-    directory = get_config("output_directory_path")
+    output_directory_path = get_config("output_directory_path")
 
     consumer = KafkaConsumer(
         get_config("KAFKA_TOPIC"),
@@ -40,42 +40,16 @@ def main():
         if 'filename' in message_body:
             # filename is from the kafka message value
             filename = message_body['filename']
-            full_path = os.path.join(directory, filename)
+            full_path = os.path.join(output_directory_path, filename)
         elif 'source_full_path' in message_body:
             full_path = message_body['source_full_path']
         if os.path.exists(full_path):
-            # move type tv is used when a tv show is encoded and needs to be put back into Plex
-            # this will replace a matching file
             if move_type == "tv":
-                move_path = get_move_directory(move_type)
-                move_tv_show(filename, full_path, move_path)
-            # move type movies just puts the movie into plex
+                process_tv_move(filename, full_path, move_type)
             elif move_type == "movies":
-                move_base_path = get_move_directory(move_type)
-                # Add the movie name to the move path
-                move_path = "{}/{}".format(move_base_path, Path(filename).stem)
-                # create the move path
-                os.makedirs(move_path)
-                # move the file!
-                move_file(full_path, "{}/{}".format(move_path, filename))
-            # to encode is from the download webhook
+                process_movie_move(filename, full_path, move_type)
             elif move_type == "to_encode":
-                # first check to see if the file is already in the needed x265 format, if so, skip encoding
-                mediainfo = get_mediainfo(full_path)
-                encoded_library_name = None
-                for track in mediainfo['media']['track']:
-                    if track['@type'] == 'Video':
-                        print("DEBUG: mediainfo: {}".format(track))
-                        if 'Encoded_Library_Name' in track:
-                            encoded_library_name = track['Encoded_Library_Name']
-                        elif 'CodecID' in track:
-                            encoded_library_name = track['CodecID']
-                        print("DEBUG: encoding {}".format(encoded_library_name))
-                if encoded_library_name and encoded_library_name != 'x265':
-                    print("INFO: {} is {} and will be re-encoded".format(full_path, encoded_library_name), flush=True)
-                    copy_for_encoding(message_body)
-                else:
-                    print("INFO: {} is x265 already, skipping encoding".format(full_path), flush=True)
+                process_to_encode_move(full_path, message_body)
             else:
                 print("WARNING: There was an invalid move_type in {}".format(message_body), flush=True)
         else:
@@ -85,6 +59,60 @@ def main():
         file_discovered_metrics.labels(move_type).dec()
         # force commit
         consumer.commit_async()
+
+
+def process_to_encode_move(full_path, message_body):
+    """
+    to encode is from the download webhook
+    :param full_path:
+    :param message_body:
+    :return:
+    """
+    # first check to see if the file is already in the needed x265 format, if so, skip encoding
+    mediainfo = get_mediainfo(full_path)
+    encoded_library_name = None
+    for track in mediainfo['media']['track']:
+        if track['@type'] == 'Video':
+            print("DEBUG: mediainfo: {}".format(track))
+            if 'Encoded_Library_Name' in track:
+                encoded_library_name = track['Encoded_Library_Name']
+            elif 'CodecID' in track:
+                encoded_library_name = track['CodecID']
+            print("DEBUG: encoding {}".format(encoded_library_name))
+    if encoded_library_name and encoded_library_name != 'x265':
+        print("INFO: {} is {} and will be re-encoded".format(full_path, encoded_library_name), flush=True)
+        copy_for_encoding(message_body)
+    else:
+        print("INFO: {} is x265 already, skipping encoding".format(full_path), flush=True)
+
+
+def process_movie_move(filename, full_path, move_type):
+    """
+    move type movies just puts the movie into plex
+    :param filename:
+    :param full_path:
+    :param move_type:
+    :return:
+    """
+    move_base_path = get_move_directory(move_type)
+    # Add the movie name to the move path
+    move_path = "{}/{}".format(move_base_path, Path(filename).stem)
+    # create the move path
+    os.makedirs(move_path, exist_ok=True)
+    # move the file!
+    move_file(full_path, "{}/{}".format(move_path, filename))
+
+
+def process_tv_move(filename, full_path, move_type):
+    """
+    move type tv is used when a tv show is encoded and needs to be put back into Plex. this will replace a matching file
+    :param filename:
+    :param full_path:
+    :param move_type:
+    :return:
+    """
+    move_path = get_move_directory(move_type)
+    move_tv_show(filename, full_path, move_path)
 
 
 def get_mediainfo(full_path):
