@@ -215,12 +215,13 @@ def copy_for_encoding(message_body):
     :param message_body: The kafka message to process
     :return:
     """
-    copy_path = get_copy_path(message_body['quality'])
+    copy_path = get_copy_path(message_body['quality'], message_body['type'])
     copy_file(message_body['source_full_path'], "{}/.".format(copy_path))
 
 
-def get_copy_path(quality):
-    return get_config("WATCH_{}".format(quality))
+def get_copy_path(quality, type):
+    path = get_config("WATCH_{}_{}".format(quality, type))
+    return path
 
 
 if __name__ == '__main__':

@@ -13,4 +13,6 @@ Running tests
 
 PyPi Dependency updates
 
-    pip install --upgrade kafka-python prometheus-client
+    pip install --upgrade pip kafka-python python-consul prometheus-client pyfakefs
+    pip freeze > requirements.txt
+    sed -i '/pkg-resources/d' requirements.txt
