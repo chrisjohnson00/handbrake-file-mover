@@ -8,6 +8,7 @@ import subprocess
 import os.path
 from prometheus_client import Gauge, start_http_server
 from pathlib import Path
+from app.utils import is_x265
 
 CONFIG_PATH = "handbrake-file-mover"
 
@@ -70,17 +71,13 @@ def process_to_encode_move(full_path, message_body):
     """
     # first check to see if the file is already in the needed x265 format, if so, skip encoding
     mediainfo = get_mediainfo(full_path)
-    encoded_library_name = None
+    isx265 = False
     for track in mediainfo['media']['track']:
         if track['@type'] == 'Video':
             print("DEBUG: mediainfo: {}".format(track))
-            if 'Encoded_Library_Name' in track:
-                encoded_library_name = track['Encoded_Library_Name']
-            elif 'CodecID' in track:
-                encoded_library_name = track['CodecID']
-            print("DEBUG: encoding {}".format(encoded_library_name))
-    if encoded_library_name and encoded_library_name != 'x265':
-        print("INFO: {} is {} and will be re-encoded".format(full_path, encoded_library_name), flush=True)
+            isx265 = is_x265(track)
+    if isx265:
+        print("INFO: {} will be re-encoded".format(full_path), flush=True)
         copy_for_encoding(message_body)
     else:
         print("INFO: {} is x265 already, skipping encoding".format(full_path), flush=True)
