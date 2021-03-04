@@ -77,10 +77,10 @@ def process_to_encode_move(full_path, message_body):
             print("DEBUG: mediainfo: {}".format(track))
             isx265 = is_x265(track)
     if isx265:
+        print("INFO: {} is x265 already, skipping encoding".format(full_path), flush=True)
+    else:
         print("INFO: {} will be re-encoded".format(full_path), flush=True)
         copy_for_encoding(message_body)
-    else:
-        print("INFO: {} is x265 already, skipping encoding".format(full_path), flush=True)
 
 
 def process_movie_move(filename, full_path, move_type):
