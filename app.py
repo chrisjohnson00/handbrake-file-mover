@@ -2,15 +2,20 @@ import os
 import consul
 from datetime import datetime
 from app.file_matcher import get_show_file_parts, find_match, get_file_parts_for_directory, find_show_directory
-from kafka import KafkaConsumer
-from json import loads
+from kafka import KafkaConsumer, KafkaProducer
+from json import loads, dumps
 import subprocess
 import os.path
 from prometheus_client import Gauge, start_http_server
 from pathlib import Path
 from app.utils import is_x265
+import pygogo as gogo
 
 CONFIG_PATH = "handbrake-file-mover"
+# logging setup
+kwargs = {}
+formatter = gogo.formatters.structured_formatter
+logger = gogo.Gogo('struct', low_formatter=formatter).get_logger(**kwargs)
 
 
 def main():
@@ -20,7 +25,7 @@ def main():
 
     consumer = KafkaConsumer(
         get_config("KAFKA_TOPIC"),
-        bootstrap_servers=['kafka-headless.kafka.svc.cluster.local:9092'],
+        bootstrap_servers=[get_config('KAFKA_SERVER')],
         auto_offset_reset='earliest',
         enable_auto_commit=True,
         group_id=get_consumer_group(),
@@ -46,9 +51,11 @@ def main():
             full_path = message_body['source_full_path']
         if os.path.exists(full_path):
             if move_type == "tv":
-                process_tv_move(filename, full_path, move_type)
+                final_path = process_tv_move(filename, full_path, move_type)
+                send_post_move_message(move_type, final_path)
             elif move_type == "movies":
-                process_movie_move(filename, full_path, move_type)
+                final_path = process_movie_move(filename, full_path, move_type)
+                send_post_move_message(move_type, final_path)
             elif move_type == "to_encode":
                 process_to_encode_move(full_path, message_body)
             else:
@@ -97,7 +104,9 @@ def process_movie_move(filename, full_path, move_type):
     # create the move path
     os.makedirs(move_path, exist_ok=True)
     # move the file!
-    move_file(full_path, "{}/{}".format(move_path, filename))
+    final_path = "{}/{}".format(move_path, filename)
+    move_file(full_path, final_path)
+    return final_path
 
 
 def process_tv_move(filename, full_path, move_type):
@@ -109,7 +118,7 @@ def process_tv_move(filename, full_path, move_type):
     :return:
     """
     move_path = get_move_directory(move_type)
-    move_tv_show(filename, full_path, move_path)
+    return move_tv_show(filename, full_path, move_path)
 
 
 def get_mediainfo(full_path):
@@ -162,12 +171,14 @@ def move_tv_show(filename, full_path, move_path):
                 "WARN: {} - Couldn't match any file in target directory '{}' for '{}'".format(
                     datetime.now().strftime("%b %d %H:%M:%S"), target_dir, source_file_parts['filename']),
                 flush=True)
+        return target_file_full_path
     else:
         print(
             "WARN: {} - SKIPPING '{}', calculated target directory '{}' was not found!!".format(
                 datetime.now().strftime("%b %d %H:%M:%S"), filename,
                 target_dir),
             flush=True)
+    return None
 
 
 def get_consumer_group():
@@ -219,6 +230,25 @@ def copy_for_encoding(message_body):
 def get_copy_path(quality, type):
     path = get_config("WATCH_{}_{}".format(quality, type))
     return path
+
+
+def send_post_move_message(type, file_path):
+    # send the message to kafka, if configured
+    kafka_server = get_config('KAFKA_SERVER')
+    kafka_topic = get_config('KAFKA_TOPIC_POST_MOVE')
+    message = {'type': type, 'file_path': file_path}
+    if kafka_server and kafka_topic:
+        producer = KafkaProducer(bootstrap_servers=[kafka_server],
+                                 acks=1,
+                                 api_version_auto_timeout_ms=10000,
+                                 value_serializer=lambda x:
+                                 dumps(x).encode('utf-8'))
+
+        future = producer.send(topic=kafka_topic, value=message)
+        future.get(timeout=60)
+        logger.info("Sent message to {} for {}".format(kafka_topic, file_path))
+    else:
+        logger.warning("KAFKA_SERVER or KAFKA_TOPIC was not found in configs, no messages will be sent")
 
 
 if __name__ == '__main__':
