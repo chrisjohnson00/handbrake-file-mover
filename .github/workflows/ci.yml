@@ -32,7 +32,7 @@ jobs:
       - name: 'Install dependencies'
         run: |
           echo "Installing CI requirements"
-          pip install --upgrade --user pip pytest coverage
+          pip install --upgrade --user pip pytest coverage pyfakefs
           echo "Installing project requirements"
           pip install -r requirements.txt
       - name: 'Run tests'
@@ -45,12 +45,59 @@ jobs:
     runs-on: 'ubuntu-20.04'
     steps:
       - uses: 'actions/checkout@v2'
-      - name: 'Build the Docker image'
-        run: 'docker build . -t chrisjohnson00/handbrake-file-mover:${GITHUB_REF##*/}'
-      - name: 'Login to docker hub'
-        run: 'docker login --username=chrisjohnson00 --password=${{ secrets.DOCKER_HUB_PASSWORD }}'
-      - name: 'Push the Docker image'
-        run: 'docker push chrisjohnson00/handbrake-file-mover:${GITHUB_REF##*/}'
+      - name: 'Prepare'
+        id: 'prep'
+        run: |
+          DOCKER_IMAGE=chrisjohnson00/handbrake-file-mover
+          VERSION=edge
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/}
+          fi
+          if [[ $GITHUB_REF == refs/heads/* ]]; then
+            VERSION=${GITHUB_REF#refs/heads/}
+            if [[ $VERSION == main ]]; then
+              VERSION=latest
+            fi
+          fi
+          TAGS="${DOCKER_IMAGE}:${VERSION//\//-}"
+          echo ::set-output name=tags::${TAGS}
+          echo ::set-output name=cache_from::${TAGS}
+          echo ::set-output name=version::${VERSION//\//-}
+          echo ::set-output name=cache_version::${VERSION//\//-}
+      - name: 'Setup Docker Buildx'
+        uses: 'docker/setup-buildx-action@v1'
+      - name: 'Cache Docker layers'
+        uses: 'actions/cache@v2'
+        with:
+          path: '/tmp/.buildx-cache'
+          key: '${{ runner.os }}-buildx-${{ steps.prep.outputs.cache_version }}-${{ github.sha }}'
+          restore-keys: |
+            ${{ runner.os }}-buildx-${{ steps.prep.outputs.cache_version }}-
+            ${{ runner.os }}-buildx-
+      - name: 'Login to DockerHub'
+        uses: 'docker/login-action@v1'
+        with:
+          username: 'chrisjohnson00'
+          password: '${{ secrets.DOCKER_HUB_PASSWORD }}'
+      - name: 'Build and push'
+        id: 'docker_build'
+        uses: 'docker/build-push-action@v2'
+        with:
+          context: '.'
+          file: './Dockerfile'
+          # ensure latest base image is used
+          pull: 'true'
+          # publish
+          push: 'true'
+          # tags determined by prep step
+          tags: '${{ steps.prep.outputs.tags }}'
+          cache-from: 'type=local,src=/tmp/.buildx-cache'
+          cache-to: 'type=local,dest=/tmp/.buildx-cache'
+          labels: |
+            org.opencontainers.image.documentation=https://github.com/chrisjohnson00/handbrake-file-mover
+            org.opencontainers.image.version=${{ steps.prep.outputs.version }}
+            org.opencontainers.image.source=https://github.com/chrisjohnson00/handbrake-file-mover
+            org.opencontainers.image.revision=${{ github.sha }}
   actionslint:
     name: 'Actions Yaml Lint'
     runs-on: 'ubuntu-20.04'
