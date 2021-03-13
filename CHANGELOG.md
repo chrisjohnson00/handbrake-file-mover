@@ -1,5 +1,18 @@
 # Changelog
 
+## [v2.5.3](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.5.3) (2021-03-13)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.2...v2.5.3)
+
+**Merged pull requests:**
+
+- ci: action version updates [\#63](https://github.com/chrisjohnson00/handbrake-file-mover/pull/63) ([chrisjohnson00](https://github.com/chrisjohnson00))
+- chore: bump actions/cache from v2 to v2.1.4 [\#62](https://github.com/chrisjohnson00/handbrake-file-mover/pull/62) ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore: bump mathieudutour/github-tag-action from v5 to v5.3 [\#59](https://github.com/chrisjohnson00/handbrake-file-mover/pull/59) ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore: bump charmixer/auto-changelog-action from v1.1 to v1.2 [\#58](https://github.com/chrisjohnson00/handbrake-file-mover/pull/58) ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore: bump wagoid/commitlint-github-action from v2 to v3.0.6 [\#57](https://github.com/chrisjohnson00/handbrake-file-mover/pull/57) ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore: bump wyriHaximus/github-action-get-previous-tag from 1.0.0 to v1.0.1 [\#56](https://github.com/chrisjohnson00/handbrake-file-mover/pull/56) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v2.5.2](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.5.2) (2021-03-10)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.1...v2.5.2)
@@ -66,6 +79,7 @@
 
 **Merged pull requests:**
 
+- chore: CI and Dependabot updates [\#38](https://github.com/chrisjohnson00/handbrake-file-mover/pull/38) ([chrisjohnson00](https://github.com/chrisjohnson00))
 - Bump importlib-metadata from 2.0.0 to 3.1.0 [\#26](https://github.com/chrisjohnson00/handbrake-file-mover/pull/26) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump more-itertools from 8.2.0 to 8.6.0 [\#24](https://github.com/chrisjohnson00/handbrake-file-mover/pull/24) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump prometheus-client from 0.8.0 to 0.9.0 [\#23](https://github.com/chrisjohnson00/handbrake-file-mover/pull/23) ([dependabot[bot]](https://github.com/apps/dependabot))
