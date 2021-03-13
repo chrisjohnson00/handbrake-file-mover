@@ -1,5 +1,57 @@
 # Changelog
 
+## [v2.5.2](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.5.2) (2021-03-10)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.1...v2.5.2)
+
+## [v2.5.1](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.5.1) (2021-03-10)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.0...v2.5.1)
+
+**Merged pull requests:**
+
+- ci: adding kustomize for deployment via flux-cd [\#61](https://github.com/chrisjohnson00/handbrake-file-mover/pull/61) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
+## [v2.5.0](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.5.0) (2021-03-10)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.4.1...v2.5.0)
+
+**Implemented enhancements:**
+
+- feat: adding post move kafka message for tv/movie moves [\#60](https://github.com/chrisjohnson00/handbrake-file-mover/pull/60) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
+## [v2.4.1](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.4.1) (2021-03-04)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.4.0...v2.4.1)
+
+**Fixed bugs:**
+
+- fix: x265 skipping logic was backwards :doh: [\#50](https://github.com/chrisjohnson00/handbrake-file-mover/pull/50) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
+## [v2.4.0](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.4.0) (2021-03-04)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.3.0...v2.4.0)
+
+**Implemented enhancements:**
+
+- feat: Adding movies to `to\_encode` \(\#48\) [\#49](https://github.com/chrisjohnson00/handbrake-file-mover/pull/49) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
+## [v2.3.0](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.3.0) (2021-02-28)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.2.0...v2.3.0)
+
+**Implemented enhancements:**
+
+- feat: organize movies in movie folders [\#47](https://github.com/chrisjohnson00/handbrake-file-mover/pull/47) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
+## [v2.2.0](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.2.0) (2021-02-22)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.1.3...v2.2.0)
+
+**Implemented enhancements:**
+
+- feat: Create movie folder and move the movie file into that folder [\#44](https://github.com/chrisjohnson00/handbrake-file-mover/pull/44) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
 ## [v2.1.3](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.1.3) (2020-12-22)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.1.2...v2.1.3)
@@ -14,7 +66,6 @@
 
 **Merged pull requests:**
 
-- chore: CI and Dependabot updates [\#38](https://github.com/chrisjohnson00/handbrake-file-mover/pull/38) ([chrisjohnson00](https://github.com/chrisjohnson00))
 - Bump importlib-metadata from 2.0.0 to 3.1.0 [\#26](https://github.com/chrisjohnson00/handbrake-file-mover/pull/26) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump more-itertools from 8.2.0 to 8.6.0 [\#24](https://github.com/chrisjohnson00/handbrake-file-mover/pull/24) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump prometheus-client from 0.8.0 to 0.9.0 [\#23](https://github.com/chrisjohnson00/handbrake-file-mover/pull/23) ([dependabot[bot]](https://github.com/apps/dependabot))
