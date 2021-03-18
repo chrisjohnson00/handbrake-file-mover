@@ -53,6 +53,7 @@ jobs:
           release_branches: 'main'
           default_bump: 'patch'
           dry_run: 'true'
+          append_to_pre_release_tag: ''
       - name: 'Prepare'
         id: 'prep'
         run: |
