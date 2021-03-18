@@ -40,7 +40,7 @@ jobs:
       - name: 'Display coverage report'
         run: 'python -m coverage report --fail-under 80 -m'
   container_build:
-    needs: ['lint', 'test']
+#    needs: ['lint', 'test']
     name: 'Build and Push Docker Container'
     runs-on: 'ubuntu-20.04'
     steps:
