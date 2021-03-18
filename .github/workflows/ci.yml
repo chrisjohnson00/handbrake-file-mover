@@ -53,7 +53,7 @@ jobs:
           release_branches: 'main'
           default_bump: 'patch'
           dry_run: 'true'
-          append_to_pre_release_tag: ''
+          append_to_pre_release_tag: '-rc.${GITHUB_RUN_ID}'
           pre_release_branches: '^((main(?!$)).+|(?!main).+)$'
       - name: 'Prepare'
         id: 'prep'
@@ -67,7 +67,7 @@ jobs:
             if [[ $VERSION == main ]]; then
               VERSION=latest
             else
-              VERSION=${{ steps.calculated-next-version.outputs.new_tag }}-rc.${GITHUB_RUN_ID}
+              VERSION=${{ steps.calculated-next-version.outputs.new_tag }}
             fi
           fi
           TAGS="${DOCKER_IMAGE}:${VERSION//\//-}"
