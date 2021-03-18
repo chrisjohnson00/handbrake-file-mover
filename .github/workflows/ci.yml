@@ -108,6 +108,6 @@ jobs:
         uses: 'karancode/yamllint-github-action@v2.0.0'
         with:
           yamllint_comment: 'true'
-          yamllint_config_datapath: '{"extends":"default","rules":{"line-length":{"max":360,"level":"warning"},"quoted-strings":{"quote-type":"single","required":true,"level":"error"},"truthy":{"check-keys":false},"document-start":{"present":false}}}'
+          yamllint_config_datapath: '{"extends":"default","rules":{"line-length":{"max":360,"level":"warning"},"truthy":{"check-keys":false},"document-start":{"present":false}}}'
         env:
           GITHUB_ACCESS_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
