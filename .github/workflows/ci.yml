@@ -45,6 +45,7 @@ jobs:
     runs-on: 'ubuntu-20.04'
     if: |
       !startsWith(github.event.head_commit.message, 'chore:') && !startsWith(github.event.head_commit.message, 'ci:')
+      && !startsWith(github.event.head_commit.message, 'flux')
     steps:
       - uses: 'actions/checkout@v2'
       - name: 'Get calculated next version based on commit history'
