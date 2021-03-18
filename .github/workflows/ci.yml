@@ -44,7 +44,7 @@ jobs:
     name: 'Build and Push Docker Container'
     runs-on: 'ubuntu-20.04'
     if: |
-      !starts_with(github.event.head_commit.message, 'chore:') && !starts_with(github.event.head_commit.message, 'ci:')
+      !startsWith(github.event.head_commit.message, 'chore:') && !startsWith(github.event.head_commit.message, 'ci:')
     steps:
       - uses: 'actions/checkout@v2'
       - name: 'Get calculated next version based on commit history'
