@@ -33,7 +33,7 @@ spec:
                       - 'k8smaster'
       containers:
         - name: 'handbrake-job-file-mover'
-          image: 'chrisjohnson00/handbrake-file-mover:v2.5.1'
+          image: chrisjohnson00/handbrake-file-mover:send-messages-on-skipped-encoding
           imagePullPolicy: 'IfNotPresent'
           volumeMounts:
             - name: 'tv'
