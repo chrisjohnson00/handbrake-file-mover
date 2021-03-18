@@ -53,7 +53,7 @@ jobs:
           path: '.github/actions/github-tag-action'
       - name: 'Get calculated next version based on commit history'
         id: 'calculated-next-version'
-        uses: '.github/actions/github-tag-action'
+        uses: './.github/actions/github-tag-action'
         with:
           github_token: '${{ secrets.GITHUB_TOKEN }}'
           release_branches: 'main'
