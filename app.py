@@ -85,6 +85,7 @@ def process_to_encode_move(full_path, message_body):
             isx265 = is_x265(track)
     if isx265:
         print("INFO: {} is x265 already, skipping encoding".format(full_path), flush=True)
+        send_post_move_message(message_body['type'], full_path)
     else:
         print("INFO: {} will be re-encoded".format(full_path), flush=True)
         copy_for_encoding(message_body)
