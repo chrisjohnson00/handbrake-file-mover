@@ -59,7 +59,7 @@ jobs:
           release_branches: 'main'
           default_bump: 'patch'
           dry_run: 'true'
-#          append_to_pre_release_tag: 'rc'
+          append_to_pre_release_tag: 'rc-${{ env.GITHUB_RUN_ID }}'
           pre_release_branches: '^((main(?!$)).+|(?!main).+)$'
       - name: 'Prepare'
         id: 'prep'
