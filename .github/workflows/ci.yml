@@ -66,7 +66,7 @@ jobs:
             if [[ $VERSION == main ]]; then
               VERSION=latest
             else
-              VERSION=${{ steps.calculated-next-version.outputs.new_version }}-rc.${GITHUB_RUN_ID}
+              VERSION=${{ steps.calculated-next-version.outputs.new_tag }}-rc.${GITHUB_RUN_ID}
             fi
           fi
           TAGS="${DOCKER_IMAGE}:${VERSION//\//-}"
