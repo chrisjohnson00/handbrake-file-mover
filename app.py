@@ -247,7 +247,7 @@ def send_post_move_message(type, file_path):
 
         future = producer.send(topic=kafka_topic, value=message)
         future.get(timeout=60)
-        logger.info("Sent message to {} for {}".format(kafka_topic, file_path))
+        logger.info("Sent message {} to {}".format(message, kafka_topic))
     else:
         logger.warning("KAFKA_SERVER or KAFKA_TOPIC was not found in configs, no messages will be sent")
 
