@@ -58,7 +58,7 @@ jobs:
       - name: 'Prepare'
         id: 'prep'
         run: |
-          DOCKER_IMAGE=chrisjohnson00/metadata-cleaner
+          DOCKER_IMAGE=chrisjohnson00/handbrake-file-mover
           VERSION=edge
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/}
