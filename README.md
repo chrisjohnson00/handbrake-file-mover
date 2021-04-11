@@ -13,6 +13,7 @@ Running tests
 
 PyPi Dependency updates
 
-    pip install --upgrade pip kafka-python python-consul prometheus-client pygogo
+    pip install --upgrade pip
+    pip install --upgrade kafka-python python-consul prometheus-client pygogo
     pip freeze > requirements.txt
     sed -i '/pkg-resources/d' requirements.txt
