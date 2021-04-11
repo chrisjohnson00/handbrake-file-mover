@@ -71,9 +71,15 @@ jobs:
               VERSION=${{ steps.calculated-next-version.outputs.new_tag }}
             fi
           fi
+          PUSH=true
+          if [[ $GITHUB_REF == refs/heads/dependabot* ]]; then
+            echo "Dependabot branch"
+            PUSH=false
+          fi
           TAGS="${DOCKER_IMAGE}:${VERSION//\//-}"
           echo ::set-output name=tags::${TAGS}
           echo ::set-output name=version::${VERSION//\//-}
+          echo ::set-output name=push::${PUSH}
       - name: 'Setup Docker Buildx'
         uses: 'docker/setup-buildx-action@v1'
       - name: 'Cache Docker layers'
@@ -98,7 +104,7 @@ jobs:
           # ensure latest base image is used
           pull: 'true'
           # publish
-          push: 'true'
+          push: '${{ steps.prep.outputs.push }}'
           # tags determined by prep step
           tags: '${{ steps.prep.outputs.tags }}'
           cache-from: 'type=local,src=/tmp/.buildx-cache'
