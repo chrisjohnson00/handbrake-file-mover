@@ -40,7 +40,7 @@ def main():
         #     'move_type': 'to_encode', 'type': 'tv', 'quality': '1080p'}
         # move_type is common between the all message types
         move_type = message_body['move_type']
-        print("INFO: Processing new message {}".format(message_body), flush=True)
+        logger.info("Processing new message", extra={'message_body': message_body})
         file_discovered_metrics.labels(move_type).inc()
 
         if 'filename' in message_body:
@@ -53,17 +53,18 @@ def main():
             if move_type == "tv":
                 final_path = process_tv_move(filename, full_path, move_type)
                 send_post_move_message(move_type, final_path)
-            elif move_type == "movies":
+            elif move_type == "movie":
                 final_path = process_movie_move(filename, full_path, move_type)
                 send_post_move_message(move_type, final_path)
             elif move_type == "to_encode":
                 process_to_encode_move(full_path, message_body)
             else:
-                print("WARNING: There was an invalid move_type in {}".format(message_body), flush=True)
+                logger.warning("There was an invalid move_type", extra={'message_body': message_body})
         else:
-            print("{} doesn't exist on disk, skipping processing".format(full_path))
+            logger.warning("{} doesn't exist on disk, skipping processing".format(full_path))
 
-        print("INFO: Done processing message {}".format(message_body), flush=True)
+        logger.info("Done processing message", extra={'message_body': message_body})
+
         file_discovered_metrics.labels(move_type).dec()
         # force commit
         consumer.commit_async()
