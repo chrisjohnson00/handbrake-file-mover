@@ -1,5 +1,13 @@
 # Changelog
 
+## [v2.6.4](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.6.4) (2021-04-11)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.6.3...v2.6.4)
+
+**Merged pull requests:**
+
+- ci: fix flake8 to not require a .flake8 file [\#78](https://github.com/chrisjohnson00/handbrake-file-mover/pull/78) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
 ## [v2.6.3](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.6.3) (2021-04-11)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.6.2...v2.6.3)
@@ -11,10 +19,6 @@
 ## [v2.6.2](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.6.2) (2021-04-11)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.6.1...v2.6.2)
-
-**Implemented enhancements:**
-
-- feat: send messages on skipped encoding [\#75](https://github.com/chrisjohnson00/handbrake-file-mover/pull/75) ([chrisjohnson00](https://github.com/chrisjohnson00))
 
 **Merged pull requests:**
 
@@ -31,6 +35,10 @@
 ## [v2.6.0](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.6.0) (2021-04-11)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.3...v2.6.0)
+
+**Implemented enhancements:**
+
+- feat: send messages on skipped encoding [\#75](https://github.com/chrisjohnson00/handbrake-file-mover/pull/75) ([chrisjohnson00](https://github.com/chrisjohnson00))
 
 **Merged pull requests:**
 
@@ -81,10 +89,6 @@
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.3.0...v2.4.0)
 
-**Implemented enhancements:**
-
-- feat: Adding movies to `to\_encode` \(\#48\) [\#49](https://github.com/chrisjohnson00/handbrake-file-mover/pull/49) ([chrisjohnson00](https://github.com/chrisjohnson00))
-
 ## [v2.3.0](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.3.0) (2021-02-28)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.2.0...v2.3.0)
@@ -104,6 +108,10 @@
 ## [v2.1.3](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.1.3) (2020-12-22)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.1.2...v2.1.3)
+
+**Implemented enhancements:**
+
+- feat: Adding movies to `to\_encode` \(\#48\) [\#49](https://github.com/chrisjohnson00/handbrake-file-mover/pull/49) ([chrisjohnson00](https://github.com/chrisjohnson00))
 
 **Fixed bugs:**
 
