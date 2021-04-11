@@ -1,8 +1,28 @@
 # Changelog
 
+## [v2.6.1](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.6.1) (2021-04-11)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.6.0...v2.6.1)
+
+**Merged pull requests:**
+
+- ci: reverting skipping auto release on some prefixes [\#76](https://github.com/chrisjohnson00/handbrake-file-mover/pull/76) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
+## [v2.6.0](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.6.0) (2021-04-11)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.3...v2.6.0)
+
+**Implemented enhancements:**
+
+- feat: send messages on skipped encoding [\#75](https://github.com/chrisjohnson00/handbrake-file-mover/pull/75) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
+**Merged pull requests:**
+
+- ci: removing develop branch [\#65](https://github.com/chrisjohnson00/handbrake-file-mover/pull/65) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
 ## [v2.5.3](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.5.3) (2021-03-13)
 
-[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.2...v2.5.3)
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.1...v2.5.3)
 
 **Merged pull requests:**
 
@@ -13,13 +33,13 @@
 - chore: bump wagoid/commitlint-github-action from v2 to v3.0.6 [\#57](https://github.com/chrisjohnson00/handbrake-file-mover/pull/57) ([dependabot[bot]](https://github.com/apps/dependabot))
 - chore: bump wyriHaximus/github-action-get-previous-tag from 1.0.0 to v1.0.1 [\#56](https://github.com/chrisjohnson00/handbrake-file-mover/pull/56) ([dependabot[bot]](https://github.com/apps/dependabot))
 
-## [v2.5.2](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.5.2) (2021-03-10)
-
-[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.1...v2.5.2)
-
 ## [v2.5.1](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.5.1) (2021-03-10)
 
-[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.0...v2.5.1)
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.2...v2.5.1)
+
+## [v2.5.2](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.5.2) (2021-03-10)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.0...v2.5.2)
 
 **Merged pull requests:**
 
@@ -69,13 +89,13 @@
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.1.2...v2.1.3)
 
-**Fixed bugs:**
-
-- fix: Correcting an issue with mis-matched directories because of casing [\#39](https://github.com/chrisjohnson00/handbrake-file-mover/pull/39) ([chrisjohnson00](https://github.com/chrisjohnson00))
-
 ## [v2.1.2](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.1.2) (2020-12-21)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.1.1...v2.1.2)
+
+**Fixed bugs:**
+
+- fix: Correcting an issue with mis-matched directories because of casing [\#39](https://github.com/chrisjohnson00/handbrake-file-mover/pull/39) ([chrisjohnson00](https://github.com/chrisjohnson00))
 
 **Merged pull requests:**
 
