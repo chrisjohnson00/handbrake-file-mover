@@ -1,8 +1,20 @@
 # Changelog
 
+## [v2.6.3](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.6.3) (2021-04-11)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.6.2...v2.6.3)
+
+**Merged pull requests:**
+
+- ci: removing hardcoded container name [\#77](https://github.com/chrisjohnson00/handbrake-file-mover/pull/77) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
 ## [v2.6.2](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.6.2) (2021-04-11)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.6.1...v2.6.2)
+
+**Implemented enhancements:**
+
+- feat: send messages on skipped encoding [\#75](https://github.com/chrisjohnson00/handbrake-file-mover/pull/75) ([chrisjohnson00](https://github.com/chrisjohnson00))
 
 **Merged pull requests:**
 
@@ -19,10 +31,6 @@
 ## [v2.6.0](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.6.0) (2021-04-11)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.3...v2.6.0)
-
-**Implemented enhancements:**
-
-- feat: send messages on skipped encoding [\#75](https://github.com/chrisjohnson00/handbrake-file-mover/pull/75) ([chrisjohnson00](https://github.com/chrisjohnson00))
 
 **Merged pull requests:**
 
