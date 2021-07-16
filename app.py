@@ -1,6 +1,5 @@
 import os
 import consul
-from datetime import datetime
 from app.file_matcher import get_show_file_parts, find_match, get_file_parts_for_directory, find_show_directory
 from kafka import KafkaConsumer, KafkaProducer
 from json import loads, dumps
@@ -19,7 +18,7 @@ logger = gogo.Gogo('struct', low_formatter=formatter).get_logger(**kwargs)
 
 
 def main():
-    print("INFO: Starting!!", flush=True)
+    logger.info("Starting!!")
     start_http_server(8080)
     output_directory_path = get_config("output_directory_path")
 
@@ -28,19 +27,20 @@ def main():
         bootstrap_servers=[get_config('KAFKA_SERVER')],
         auto_offset_reset='earliest',
         enable_auto_commit=True,
-        group_id=get_consumer_group(),
+        group_id=get_config("consumer_group"),
         value_deserializer=lambda x: loads(x.decode('utf-8')))
 
     file_discovered_metrics = Gauge('handbrake_job_move_file_in_process', 'File Mover Found A File',
                                     labelnames=["move_type"])
+
     for message in consumer:
         message_body = message.value
         # message value should be an object with {'filename':'value",'type','tv|movie'}
         # but could also be: {'source_full_path': '/tv/The 100/Season 4/The 100 - S04E01 - Echoes WEBRip-1080p.mkv',
         #     'move_type': 'to_encode', 'type': 'tv', 'quality': '1080p'}
         # move_type is common between the all message types
-        move_type = message_body['move_type']
         logger.info("Processing new message", extra={'message_body': message_body})
+        move_type = message_body['move_type']
         file_discovered_metrics.labels(move_type).inc()
 
         if 'filename' in message_body:
@@ -82,13 +82,13 @@ def process_to_encode_move(full_path, message_body):
     isx265 = False
     for track in mediainfo['media']['track']:
         if track['@type'] == 'Video':
-            print("DEBUG: mediainfo: {}".format(track))
+            logger.debug("mediainfo", extra={'track': track})
             isx265 = is_x265(track)
     if isx265:
-        print("INFO: {} is x265 already, skipping encoding".format(full_path), flush=True)
+        logger.info(f"{full_path} is x265 already, skipping encoding")
         send_post_move_message(message_body['type'], full_path)
     else:
-        print("INFO: {} will be re-encoded".format(full_path), flush=True)
+        logger.info(f"{full_path} will be re-encoded")
         copy_for_encoding(message_body)
 
 
@@ -143,18 +143,11 @@ def move_tv_show(filename, full_path, move_path):
     target_dir_exists = os.path.isdir(target_dir)
     # let's hope that the original directory is found!
     if target_dir_exists:
-        print(
-            "INFO: {} - Looking for matching file for '{}' in target directory '{}'".format(
-                datetime.now().strftime("%b %d %H:%M:%S"), filename,
-                target_dir),
-            flush=True)
+        logger.info(f"Looking for matching file for '{filename}' in target directory '{target_dir}'")
         file_to_replace = find_match(source_file_parts, get_file_parts_for_directory(target_dir))
         if file_to_replace:
-            print(
-                "INFO: {} - Replacing '{}' in target directory '{}' with '{}'".format(
-                    datetime.now().strftime("%b %d %H:%M:%S"), file_to_replace['filename'],
-                    target_dir, source_file_parts['filename']),
-                flush=True)
+            fn = file_to_replace['filename']
+            logger.info(f"Replacing '{fn}' in target directory '{target_dir}' with '{source_file_parts['filename']}'")
             try:
                 target_file_full_path = "{}/{}".format(target_dir, source_file_parts['filename'])
                 original_file_full_path = "{}/{}".format(target_dir, file_to_replace['filename'])
@@ -165,26 +158,16 @@ def move_tv_show(filename, full_path, move_path):
                     os.remove(original_file_full_path)
                     os.remove(full_path)
                 else:
-                    print("WARN: {} - {} was not found".format(datetime.now().strftime("%b %d %H:%M:%S"), full_path))
+                    logger.warning(f"{full_path} was not found")
             except Exception as e:
                 raise Exception("Could not copy {}, encountered Exception {}".format(full_path, e))
         else:
-            print(
-                "WARN: {} - Couldn't match any file in target directory '{}' for '{}'".format(
-                    datetime.now().strftime("%b %d %H:%M:%S"), target_dir, source_file_parts['filename']),
-                flush=True)
+            logger.warning(
+                f"Couldn't match any file in target directory '{target_dir}' for '{source_file_parts['filename']}'")
         return target_file_full_path
     else:
-        print(
-            "WARN: {} - SKIPPING '{}', calculated target directory '{}' was not found!!".format(
-                datetime.now().strftime("%b %d %H:%M:%S"), filename,
-                target_dir),
-            flush=True)
+        logger.warning(f"SKIPPING '{filename}', calculated target directory '{target_dir}' was not found!!")
     return None
-
-
-def get_consumer_group():
-    return get_config("consumer_group")
 
 
 def get_move_directory(move_type):
@@ -198,7 +181,7 @@ def get_file_size(file):
 def get_config(key, config_path=CONFIG_PATH):
     if os.environ.get(key):
         return os.environ.get(key)
-    print("INFO: looking for {}/{} in consul".format(config_path, key), flush=True)
+    logger.info(f"looking for {config_path}/{key} in consul")
     c = consul.Consul()
     index, data = c.kv.get("{}/{}".format(config_path, key))
     return data['Value'].decode("utf-8")
@@ -206,15 +189,13 @@ def get_config(key, config_path=CONFIG_PATH):
 
 def copy_file(src, dest):
     command = ["cp", src, dest]
-    print("INFO: {} - File copy command called {}".format(datetime.now().strftime("%b %d %H:%M:%S"), command),
-          flush=True)
+    logger.info(f"File copy command called {command}")
     subprocess.run(command, check=True)
 
 
 def move_file(src, dest):
     command = ["mv", src, dest]
-    print("INFO: {} - File move command called {}".format(datetime.now().strftime("%b %d %H:%M:%S"), command),
-          flush=True)
+    logger.info(f"File move command called {command}")
     subprocess.run(command, check=True)
 
 
