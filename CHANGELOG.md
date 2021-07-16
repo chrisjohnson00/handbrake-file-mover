@@ -1,5 +1,13 @@
 # Changelog
 
+## [v2.6.5](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.6.5) (2021-07-16)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.6.4...v2.6.5)
+
+**Merged pull requests:**
+
+- chore: adding some debug output for troubleshooting [\#103](https://github.com/chrisjohnson00/handbrake-file-mover/pull/103) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
 ## [v2.6.4](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.6.4) (2021-04-11)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.6.3...v2.6.4)
@@ -46,7 +54,7 @@
 
 ## [v2.5.3](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.5.3) (2021-03-13)
 
-[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.2...v2.5.3)
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.1...v2.5.3)
 
 **Merged pull requests:**
 
@@ -57,13 +65,13 @@
 - chore: bump wagoid/commitlint-github-action from v2 to v3.0.6 [\#57](https://github.com/chrisjohnson00/handbrake-file-mover/pull/57) ([dependabot[bot]](https://github.com/apps/dependabot))
 - chore: bump wyriHaximus/github-action-get-previous-tag from 1.0.0 to v1.0.1 [\#56](https://github.com/chrisjohnson00/handbrake-file-mover/pull/56) ([dependabot[bot]](https://github.com/apps/dependabot))
 
-## [v2.5.2](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.5.2) (2021-03-10)
-
-[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.1...v2.5.2)
-
 ## [v2.5.1](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.5.1) (2021-03-10)
 
-[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.0...v2.5.1)
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.2...v2.5.1)
+
+## [v2.5.2](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.5.2) (2021-03-10)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.0...v2.5.2)
 
 **Merged pull requests:**
 
@@ -89,6 +97,10 @@
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.3.0...v2.4.0)
 
+**Implemented enhancements:**
+
+- feat: Adding movies to `to\_encode` \(\#48\) [\#49](https://github.com/chrisjohnson00/handbrake-file-mover/pull/49) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
 ## [v2.3.0](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.3.0) (2021-02-28)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.2.0...v2.3.0)
@@ -108,10 +120,6 @@
 ## [v2.1.3](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.1.3) (2020-12-22)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.1.2...v2.1.3)
-
-**Implemented enhancements:**
-
-- feat: Adding movies to `to\_encode` \(\#48\) [\#49](https://github.com/chrisjohnson00/handbrake-file-mover/pull/49) ([chrisjohnson00](https://github.com/chrisjohnson00))
 
 **Fixed bugs:**
 
