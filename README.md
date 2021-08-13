@@ -14,6 +14,8 @@ Running tests
 PyPi Dependency updates
 
     pip install --upgrade pip
-    pip install --upgrade kafka-python python-consul prometheus-client pygogo
+    pip install --upgrade kafka-python pulsar-client python-consul prometheus-client pygogo fastavro==0.24.0
     pip freeze > requirements.txt
-    sed -i '/pkg-resources/d' requirements.txt
+    sed -i '/pkg_resources/d' requirements.txt
+
+`pulsar-client` does not support Python 3.9

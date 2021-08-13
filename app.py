@@ -1,7 +1,8 @@
 import os
 import consul
 from app.file_matcher import get_show_file_parts, find_match, get_file_parts_for_directory, find_show_directory
-from kafka import KafkaConsumer, KafkaProducer
+from kafka import KafkaProducer
+import pulsar
 from json import loads, dumps
 import subprocess
 import os.path
@@ -22,52 +23,57 @@ def main():
     start_http_server(8080)
     output_directory_path = get_config("output_directory_path")
 
-    consumer = KafkaConsumer(
-        get_config("KAFKA_TOPIC"),
-        bootstrap_servers=[get_config('KAFKA_SERVER')],
-        auto_offset_reset='earliest',
-        enable_auto_commit=True,
-        group_id=get_config("consumer_group"),
-        value_deserializer=lambda x: loads(x.decode('utf-8')))
+    client = pulsar.Client(f"pulsar://{get_config('PULSAR_SERVER')}")
 
     file_discovered_metrics = Gauge('handbrake_job_move_file_in_process', 'File Mover Found A File',
                                     labelnames=["move_type"])
 
-    for message in consumer:
-        message_body = message.value
-        # message value should be an object with {'filename':'value",'type','tv|movie'}
-        # but could also be: {'source_full_path': '/tv/The 100/Season 4/The 100 - S04E01 - Echoes WEBRip-1080p.mkv',
-        #     'move_type': 'to_encode', 'type': 'tv', 'quality': '1080p'}
-        # move_type is common between the all message types
-        logger.info("Processing new message", extra={'message_body': message_body})
-        move_type = message_body['move_type']
-        file_discovered_metrics.labels(move_type).inc()
+    consumer = client.subscribe(get_config('PULSAR_TOPIC'), get_config('PULSAR_SUBSCRIPTION'))
 
-        if 'filename' in message_body:
-            # filename is from the kafka message value
-            filename = message_body['filename']
-            full_path = os.path.join(output_directory_path, filename)
-        elif 'source_full_path' in message_body:
-            full_path = message_body['source_full_path']
-        if os.path.exists(full_path):
-            if move_type == "tv":
-                final_path = process_tv_move(filename, full_path, move_type)
-                send_post_move_message(move_type, final_path)
-            elif move_type == "movie":
-                final_path = process_movie_move(filename, full_path, move_type)
-                send_post_move_message(move_type, final_path)
-            elif move_type == "to_encode":
-                process_to_encode_move(full_path, message_body)
-            else:
-                logger.warning("There was an invalid move_type", extra={'message_body': message_body})
+    while True:
+        msg = consumer.receive()
+        try:
+            # decode from bytes, encode with backslashes removed, decode back to a string, then load it as a dict
+            message_body = loads(msg.data().decode().encode('latin1', 'backslashreplace').decode('unicode-escape'))
+            process_message(file_discovered_metrics, message_body, output_directory_path)
+            # Acknowledge successful processing of the message
+            consumer.acknowledge(msg)
+        except:  # noqa: E722
+            # Message failed to be processed
+            consumer.negative_acknowledge(msg)
+
+    client.close()
+
+
+def process_message(file_discovered_metrics, message_body, output_directory_path):
+    # message value should be an object with {'filename':'value",'type','tv|movie'}
+    # but could also be: {'source_full_path': '/tv/The 100/Season 4/The 100 - S04E01 - Echoes WEBRip-1080p.mkv',
+    #     'move_type': 'to_encode', 'type': 'tv', 'quality': '1080p'}
+    # move_type is common between the all message types
+    logger.info("Processing new message", extra={'message_body': message_body})
+    move_type = message_body['move_type']
+    file_discovered_metrics.labels(move_type).inc()
+    if 'filename' in message_body:
+        # filename is from the kafka message value
+        filename = message_body['filename']
+        full_path = os.path.join(output_directory_path, filename)
+    elif 'source_full_path' in message_body:
+        full_path = message_body['source_full_path']
+    if os.path.exists(full_path):
+        if move_type == "tv":
+            final_path = process_tv_move(filename, full_path, move_type)
+            send_post_move_message(move_type, final_path)
+        elif move_type == "movie":
+            final_path = process_movie_move(filename, full_path, move_type)
+            send_post_move_message(move_type, final_path)
+        elif move_type == "to_encode":
+            process_to_encode_move(full_path, message_body)
         else:
-            logger.warning("{} doesn't exist on disk, skipping processing".format(full_path))
-
-        logger.info("Done processing message", extra={'message_body': message_body})
-
-        file_discovered_metrics.labels(move_type).dec()
-        # force commit
-        consumer.commit_async()
+            logger.warning("There was an invalid move_type", extra={'message_body': message_body})
+    else:
+        logger.warning("{} doesn't exist on disk, skipping processing".format(full_path))
+    logger.info("Done processing message", extra={'message_body': message_body})
+    file_discovered_metrics.labels(move_type).dec()
 
 
 def process_to_encode_move(full_path, message_body):
