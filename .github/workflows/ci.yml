@@ -8,11 +8,10 @@ jobs:
   lint:
     runs-on: 'ubuntu-20.04'
     name: 'Python Lint'
+    container:
+      image: 'python:3.8-slim'
     steps:
       - uses: 'actions/checkout@v2'
-      - uses: 'actions/setup-python@v2'
-        with:
-          python-version: '3.9'
       - name: 'Install dependencies'
         run: |
           echo "Installing CI requirements"
@@ -25,11 +24,10 @@ jobs:
   test:
     runs-on: 'ubuntu-20.04'
     name: 'Python Tests'
+    container:
+      image: 'python:3.8-slim'
     steps:
       - uses: 'actions/checkout@v2'
-      - uses: 'actions/setup-python@v2'
-        with:
-          python-version: '3.9'
       - name: 'Install dependencies'
         run: |
           echo "Installing CI requirements"
