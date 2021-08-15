@@ -1,5 +1,13 @@
 # Changelog
 
+## [v3.0.0](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v3.0.0) (2021-08-15)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.6.5...v3.0.0)
+
+**Breaking changes:**
+
+- feat: migrating from kafka to pulsar [\#107](https://github.com/chrisjohnson00/handbrake-file-mover/pull/107) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
 ## [v2.6.5](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.6.5) (2021-07-16)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.6.4...v2.6.5)
@@ -54,7 +62,7 @@
 
 ## [v2.5.3](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.5.3) (2021-03-13)
 
-[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.1...v2.5.3)
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.2...v2.5.3)
 
 **Merged pull requests:**
 
@@ -65,13 +73,13 @@
 - chore: bump wagoid/commitlint-github-action from v2 to v3.0.6 [\#57](https://github.com/chrisjohnson00/handbrake-file-mover/pull/57) ([dependabot[bot]](https://github.com/apps/dependabot))
 - chore: bump wyriHaximus/github-action-get-previous-tag from 1.0.0 to v1.0.1 [\#56](https://github.com/chrisjohnson00/handbrake-file-mover/pull/56) ([dependabot[bot]](https://github.com/apps/dependabot))
 
-## [v2.5.1](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.5.1) (2021-03-10)
-
-[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.2...v2.5.1)
-
 ## [v2.5.2](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.5.2) (2021-03-10)
 
-[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.0...v2.5.2)
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.1...v2.5.2)
+
+## [v2.5.1](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.5.1) (2021-03-10)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.0...v2.5.1)
 
 **Merged pull requests:**
 
