@@ -11,7 +11,9 @@ import pytest
                                                          "Home Movie - The Princess Bride"),
                                                  (
                                                          'SpongeBob SquarePants - S10E30-E31 - Company Picnic + Pull Up a Barrel HDTV-720p.mkv',  # noqa: E501
-                                                         "SpongeBob SquarePants")])
+                                                         "SpongeBob SquarePants"),
+                                                 ('Foundation (2021) - S01E02 - Preparing to Live WEBDL-1080p.mkv',
+                                                  'Foundation (2021)')])
 def test_extract_show_from_filename(test_input, expected):
     assert expected == extract_show_from_filename(test_input)
 
