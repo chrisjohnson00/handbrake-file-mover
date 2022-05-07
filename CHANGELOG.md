@@ -1,5 +1,13 @@
 # Changelog
 
+## [v3.0.2](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v3.0.2) (2022-05-07)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v3.0.1...v3.0.2)
+
+**Merged pull requests:**
+
+- chore: updating to python 3.9 [\#164](https://github.com/chrisjohnson00/handbrake-file-mover/pull/164) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
 ## [v3.0.1](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v3.0.1) (2022-05-07)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v3.0.0...v3.0.1)
