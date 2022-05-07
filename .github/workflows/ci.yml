@@ -9,7 +9,7 @@ jobs:
     runs-on: 'ubuntu-20.04'
     name: 'Python Lint'
     container:
-      image: 'python:3.8-slim'
+      image: 'python:3.9-slim'
     steps:
       - uses: 'actions/checkout@v2'
       - name: 'Install dependencies'
@@ -25,7 +25,7 @@ jobs:
     runs-on: 'ubuntu-20.04'
     name: 'Python Tests'
     container:
-      image: 'python:3.8-slim'
+      image: 'python:3.9-slim'
     steps:
       - uses: 'actions/checkout@v2'
       - name: 'Install dependencies'
@@ -90,7 +90,7 @@ jobs:
             ${{ runner.os }}-buildx-
             ${{ runner.os }}-buildx-${{ steps.prep.outputs.version }}
       - name: 'Login to DockerHub'
-        uses: 'docker/login-action@v1'
+        uses: 'docker/login-action@v2'
         with:
           username: 'chrisjohnson00'
           password: '${{ secrets.DOCKER_HUB_PASSWORD }}'
