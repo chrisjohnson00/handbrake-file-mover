@@ -1,5 +1,14 @@
 # Changelog
 
+## [v3.0.1](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v3.0.1) (2022-05-07)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v3.0.0...v3.0.1)
+
+**Merged pull requests:**
+
+- chore: pypi and action version bumps [\#163](https://github.com/chrisjohnson00/handbrake-file-mover/pull/163) ([chrisjohnson00](https://github.com/chrisjohnson00))
+- test: adding additional test case [\#131](https://github.com/chrisjohnson00/handbrake-file-mover/pull/131) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
 ## [v3.0.0](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v3.0.0) (2021-08-15)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.6.5...v3.0.0)
@@ -107,7 +116,7 @@
 
 **Implemented enhancements:**
 
-- feat: Adding movies to `to\_encode` \(\#48\) [\#49](https://github.com/chrisjohnson00/handbrake-file-mover/pull/49) ([chrisjohnson00](https://github.com/chrisjohnson00))
+- feat: Adding movies to `to_encode` \(\#48\) [\#49](https://github.com/chrisjohnson00/handbrake-file-mover/pull/49) ([chrisjohnson00](https://github.com/chrisjohnson00))
 
 ## [v2.3.0](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.3.0) (2021-02-28)
 
