@@ -13,6 +13,10 @@ Running tests
 
 PyPi Dependency updates
 
+    docker run -it --rm -v ${PWD}:/repo -w /repo python:3.8-slim bash
+
+Then inside the container:
+
     pip install --upgrade pip
     pip install --upgrade kafka-python pulsar-client python-consul prometheus-client pygogo fastavro==0.24.0
     pip freeze > requirements.txt
