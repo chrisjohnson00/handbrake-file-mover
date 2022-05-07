@@ -13,13 +13,13 @@ Running tests
 
 PyPi Dependency updates
 
-    docker run -it --rm -v ${PWD}:/repo -w /repo python:3.8-slim bash
+    docker run -it --rm -v ${PWD}:/repo -w /repo python:3.9-slim bash
 
 Then inside the container:
 
     pip install --upgrade pip
-    pip install --upgrade kafka-python pulsar-client python-consul prometheus-client pygogo fastavro==0.24.0
+    pip install --upgrade kafka-python pulsar-client python-consul prometheus-client pygogo fastavro
     pip freeze > requirements.txt
     sed -i '/pkg_resources/d' requirements.txt
 
-`pulsar-client` does not support Python 3.9
+`pulsar-client` does not support Python 3.10
