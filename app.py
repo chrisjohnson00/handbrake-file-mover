@@ -1,8 +1,6 @@
 import os
 import consul
 from app.file_matcher import get_show_file_parts, find_match, get_file_parts_for_directory, find_show_directory
-from kafka import KafkaProducer
-from kafka.errors import KafkaError
 import pulsar
 from json import loads, dumps
 import subprocess
@@ -222,27 +220,20 @@ def get_copy_path(quality, type):
     return path
 
 
-def send_post_move_message(type, file_path):
-    # send the message to kafka, if configured
-    kafka_server = get_config('KAFKA_SERVER')
-    kafka_topic = get_config('KAFKA_TOPIC_POST_MOVE')
-    message = {'type': type, 'file_path': file_path}
-    if kafka_server and kafka_topic:
-        producer = KafkaProducer(bootstrap_servers=[kafka_server],
-                                 acks=1,
-                                 api_version_auto_timeout_ms=10000,
-                                 value_serializer=lambda x:
-                                 dumps(x).encode('utf-8'))
-
-        future = producer.send(topic=kafka_topic, value=message)
-        try:
-            future.get(timeout=60)
-        except KafkaError as ke:
-            logger.error(f"Kafka error: {ke}")
-            raise ke
-        logger.info("Sent message {} to {}".format(message, kafka_topic))
+def send_post_move_message(move_type, file_path):
+    logger.info(f"Sending post file move message for type {move_type} and file {file_path}")
+    topic = get_config("POST_FILE_MOVE_TOPIC")
+    pulsar_server = get_config('PULSAR_SERVER')
+    if pulsar_server and topic:
+        client = pulsar.Client(f"pulsar://{pulsar_server}")
+        producer = client.create_producer(topic)
+        message = {'type': move_type, 'file_path': file_path}
+        producer.send(dumps(message).encode('utf-8'))
+        logger.info("Notification sent",
+                    extra={'message_body': message, 'topic': topic, 'file_path': file_path, 'type': move_type})
+        client.close()
     else:
-        logger.warning("KAFKA_SERVER or KAFKA_TOPIC was not found in configs, no messages will be sent")
+        logger.warning("PULSAR_SERVER or POST_FILE_MOVE_TOPIC was not found in configs, no messages will be sent")
 
 
 if __name__ == '__main__':
