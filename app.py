@@ -2,6 +2,7 @@ import os
 import consul
 from app.file_matcher import get_show_file_parts, find_match, get_file_parts_for_directory, find_show_directory
 from kafka import KafkaProducer
+from kafka.errors import KafkaError
 import pulsar
 from json import loads, dumps
 import subprocess
@@ -234,7 +235,11 @@ def send_post_move_message(type, file_path):
                                  dumps(x).encode('utf-8'))
 
         future = producer.send(topic=kafka_topic, value=message)
-        future.get(timeout=60)
+        try:
+            future.get(timeout=60)
+        except KafkaError as ke:
+            logger.error(f"Kafka error: {ke}")
+            raise ke
         logger.info("Sent message {} to {}".format(message, kafka_topic))
     else:
         logger.warning("KAFKA_SERVER or KAFKA_TOPIC was not found in configs, no messages will be sent")
