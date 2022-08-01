@@ -1,6 +1,6 @@
 certifi==2021.10.8
 charset-normalizer==2.0.12
-fastavro==1.4.11
+fastavro==1.5.4
 idna==3.3
 kafka-python==2.0.2
 prometheus-client==0.14.1
