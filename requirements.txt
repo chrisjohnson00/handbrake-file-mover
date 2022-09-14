@@ -1,7 +1,7 @@
 certifi==2021.10.8
 charset-normalizer==2.0.12
 fastavro==1.4.11
-idna==3.3
+idna==3.4
 kafka-python==2.0.2
 prometheus-client==0.14.1
 pulsar-client==2.10.0
