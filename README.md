@@ -18,7 +18,7 @@ PyPi Dependency updates
 Then inside the container:
 
     pip install --upgrade pip
-    pip install --upgrade kafka-python pulsar-client python-consul prometheus-client pygogo fastavro
+    pip install --upgrade pulsar-client python-consul prometheus-client pygogo fastavro
     pip freeze > requirements.txt
     sed -i '/pkg_resources/d' requirements.txt
 
