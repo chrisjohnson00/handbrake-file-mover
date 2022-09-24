@@ -1,5 +1,18 @@
 # Changelog
 
+## [v3.0.3](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v3.0.3) (2022-09-24)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v3.0.2...v3.0.3)
+
+**Breaking changes:**
+
+- refactor: replace kafka with pulsar [\#205](https://github.com/chrisjohnson00/handbrake-file-mover/pull/205) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
+**Merged pull requests:**
+
+- chore: bump wagoid/commitlint-github-action from 4.1.11 to 4.1.12 [\#171](https://github.com/chrisjohnson00/handbrake-file-mover/pull/171) ([dependabot[bot]](https://github.com/apps/dependabot))
+- ci: action updates [\#170](https://github.com/chrisjohnson00/handbrake-file-mover/pull/170) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
 ## [v3.0.2](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v3.0.2) (2022-05-07)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v3.0.1...v3.0.2)
