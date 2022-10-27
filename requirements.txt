@@ -1,6 +1,6 @@
 certifi==2022.9.14
 charset-normalizer==2.1.1
-fastavro==1.6.1
+fastavro==1.7.0
 idna==3.4
 prometheus-client==0.14.1
 pulsar-client==2.10.1
