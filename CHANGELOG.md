@@ -1,12 +1,16 @@
 # Changelog
 
-## [Unreleased](https://github.com/chrisjohnson00/handbrake-file-mover/tree/HEAD)
+## [v4.0.2](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v4.0.2) (2023-03-15)
 
-[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v4.0.1...HEAD)
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v4.0.1...v4.0.2)
 
 **Closed issues:**
 
 - date based shows fail to move [\#242](https://github.com/chrisjohnson00/handbrake-file-mover/issues/242)
+
+**Merged pull requests:**
+
+- chore: ci and python updates [\#245](https://github.com/chrisjohnson00/handbrake-file-mover/pull/245) ([chrisjohnson00](https://github.com/chrisjohnson00))
 
 ## [v4.0.1](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v4.0.1) (2023-03-15)
 
