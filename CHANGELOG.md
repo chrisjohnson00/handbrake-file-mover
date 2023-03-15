@@ -1,5 +1,25 @@
 # Changelog
 
+## [Unreleased](https://github.com/chrisjohnson00/handbrake-file-mover/tree/HEAD)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v4.0.1...HEAD)
+
+**Closed issues:**
+
+- date based shows fail to move [\#242](https://github.com/chrisjohnson00/handbrake-file-mover/issues/242)
+
+## [v4.0.1](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v4.0.1) (2023-03-15)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v4.0.0...v4.0.1)
+
+**Fixed bugs:**
+
+- fix: unable to parse non-episodic shows \#242 [\#243](https://github.com/chrisjohnson00/handbrake-file-mover/pull/243) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
+## [v4.0.0](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v4.0.0) (2022-09-24)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v3.0.3...v4.0.0)
+
 ## [v3.0.3](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v3.0.3) (2022-09-24)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v3.0.2...v3.0.3)
@@ -92,7 +112,7 @@
 
 ## [v2.5.3](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.5.3) (2021-03-13)
 
-[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.2...v2.5.3)
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.1...v2.5.3)
 
 **Merged pull requests:**
 
@@ -103,13 +123,13 @@
 - chore: bump wagoid/commitlint-github-action from v2 to v3.0.6 [\#57](https://github.com/chrisjohnson00/handbrake-file-mover/pull/57) ([dependabot[bot]](https://github.com/apps/dependabot))
 - chore: bump wyriHaximus/github-action-get-previous-tag from 1.0.0 to v1.0.1 [\#56](https://github.com/chrisjohnson00/handbrake-file-mover/pull/56) ([dependabot[bot]](https://github.com/apps/dependabot))
 
-## [v2.5.2](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.5.2) (2021-03-10)
-
-[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.1...v2.5.2)
-
 ## [v2.5.1](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.5.1) (2021-03-10)
 
-[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.0...v2.5.1)
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.2...v2.5.1)
+
+## [v2.5.2](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v2.5.2) (2021-03-10)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v2.5.0...v2.5.2)
 
 **Merged pull requests:**
 
