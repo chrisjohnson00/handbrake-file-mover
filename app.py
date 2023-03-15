@@ -37,9 +37,10 @@ def main():
             process_message(file_discovered_metrics, message_body, output_directory_path)
             # Acknowledge successful processing of the message
             consumer.acknowledge(msg)
-        except:  # noqa: E722
+        except Exception as e:  # noqa: E722
             # Message failed to be processed
             consumer.negative_acknowledge(msg)
+            logger.error("A message could not be processed", extra={'message_body': message_body, 'exception': e})
 
     client.close()
 
