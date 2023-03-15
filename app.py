@@ -146,7 +146,12 @@ def move_tv_show(filename, full_path, move_path):
     # break up the file into it's parts for easy comparison to original file to replace
     source_file_parts = get_show_file_parts(filename)
     # move_path/show/season
-    target_dir = "{}/{}".format(find_show_directory(move_path, source_file_parts['show']), source_file_parts['season'])
+    # if the show has a season directory (non-episodic shows should not have season directories)
+    if source_file_parts['season']:
+        target_dir = "{}/{}".format(find_show_directory(move_path, source_file_parts['show']),
+                                    source_file_parts['season'])
+    else:
+        target_dir = "{}".format(find_show_directory(move_path, source_file_parts['show']))
     target_dir_exists = os.path.isdir(target_dir)
     # let's hope that the original directory is found!
     if target_dir_exists:
