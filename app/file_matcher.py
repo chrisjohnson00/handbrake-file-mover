@@ -28,9 +28,12 @@ def replace_last(source_string, replace_what, replace_with):
 
 
 def extract_season_from_filename(filename):
-    season_episode_split = extract_season_episode_parts(filename)
-    season_number = int(season_episode_split[0].strip().replace('S', ''))
-    return "Season {}".format(season_number)
+    try:
+        season_episode_split = extract_season_episode_parts(filename)
+        season_number = int(season_episode_split[0].strip().replace('S', ''))
+        return "Season {}".format(season_number)
+    except ValueError:
+        return None
 
 
 def extract_season_episode_parts(filename):
@@ -50,9 +53,19 @@ def extract_season_episode_parts(filename):
 
 
 def extract_episode_number_from_filename(filename):
-    season_episode_split = extract_season_episode_parts(filename)
-    episode_number = int(season_episode_split[1].strip().replace('E', '').replace('-', ''))
-    return episode_number
+    # first try episodic file names
+    try:
+        season_episode_split = extract_season_episode_parts(filename)
+        episode_number = int(season_episode_split[1].strip().replace('E', '').replace('-', ''))
+        return episode_number
+    except IndexError:
+        # a IndexError is raised if the episode is not episodic, process it as a day based show YYYY-MM-DD
+        pattern = re.compile(r"\d{4}-\d{1,2}-\d{1,2}")
+        match = pattern.search(filename)
+        if match:
+            return match.group(0)
+        else:
+            raise ValueError(f"Could not determine episode number or date from {filename}")
 
 
 def extract_episode_name_from_filename(filename):
