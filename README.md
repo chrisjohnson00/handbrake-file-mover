@@ -13,7 +13,7 @@ Running tests
 
 PyPi Dependency updates
 
-    docker run -it --rm -v ${PWD}:/repo -w /repo python:3.9-slim bash
+    docker run -it --rm -v ${PWD}:/repo -w /repo python:3.10-slim bash
 
 Then inside the container:
 
@@ -22,4 +22,3 @@ Then inside the container:
     pip freeze > requirements.txt
     sed -i '/pkg_resources/d' requirements.txt
 
-`pulsar-client` does not support Python 3.10

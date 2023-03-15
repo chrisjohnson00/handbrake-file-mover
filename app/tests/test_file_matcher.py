@@ -13,7 +13,10 @@ import pytest
                                                          'SpongeBob SquarePants - S10E30-E31 - Company Picnic + Pull Up a Barrel HDTV-720p.mkv',  # noqa: E501
                                                          "SpongeBob SquarePants"),
                                                  ('Foundation (2021) - S01E02 - Preparing to Live WEBDL-1080p.mkv',
-                                                  'Foundation (2021)')])
+                                                  'Foundation (2021)'),
+                                                 ('The Daily Show - 2023-03-07 - Bomani Jones WEBDL-1080p.mkv',
+                                                  'The Daily Show')
+                                                 ])
 def test_extract_show_from_filename(test_input, expected):
     assert expected == extract_show_from_filename(test_input)
 
@@ -30,7 +33,8 @@ def test_extract_show_from_filename(test_input, expected):
                                                          "Season 1"),
                                                  (
                                                          'SpongeBob SquarePants - S10E30-E31 - Company Picnic + Pull Up a Barrel HDTV-720p.mkv',  # noqa: E501
-                                                         'Season 10')])
+                                                         'Season 10'),
+                                                 ('The Daily Show - 2023-03-07 - Bomani Jones WEBDL-1080p.mkv', None)])
 def test_extract_season_from_filename(test_input, expected):
     assert expected == extract_season_from_filename(test_input)
 
@@ -42,7 +46,10 @@ def test_extract_season_from_filename(test_input, expected):
                                                          'Home Movie - The Princess Bride - S01E09 - Chapter Nine - Have Fun Storming The Castle! WEBDL-1080p.mkv',  # noqa: E501
                                                          9),
                                                  (
-                                                         'SpongeBob SquarePants - S10E30-E31 - Company Picnic + Pull Up a Barrel HDTV-720p.mkv', 30)])  # noqa: E501
+                                                         'SpongeBob SquarePants - S10E30-E31 - Company Picnic + Pull Up a Barrel HDTV-720p.mkv',  # noqa: E501
+                                                         30),
+                                                 ('The Daily Show - 2023-03-07 - Bomani Jones WEBDL-1080p.mkv',
+                                                  '2023-03-07')])
 def test_extract_episode_number_from_filename(test_input, expected):
     assert expected == extract_episode_number_from_filename(test_input)
 
@@ -55,7 +62,9 @@ def test_extract_episode_number_from_filename(test_input, expected):
                                   'Home Movie - The Princess Bride - S01E09 - Chapter Nine - Have Fun Storming The Castle! WEBDL-1080p.mkv',  # noqa: E501
                                   "Chapter Nine - Have Fun Storming The Castle! WEBDL-1080p.mkv"),
                           ('SpongeBob SquarePants - S10E30-E31 - Company Picnic + Pull Up a Barrel HDTV-720p.mkv',
-                           "Company Picnic + Pull Up a Barrel HDTV-720p.mkv")])
+                           "Company Picnic + Pull Up a Barrel HDTV-720p.mkv"),
+                          ('The Daily Show - 2023-03-07 - Bomani Jones WEBDL-1080p.mkv',
+                           'Bomani Jones WEBDL-1080p.mkv')])
 def test_extract_episode_name_from_filename(test_input, expected):
     assert expected == extract_episode_name_from_filename(test_input)
 

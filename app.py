@@ -34,24 +34,27 @@ def main():
         try:
             # decode from bytes, encode with backslashes removed, decode back to a string, then load it as a dict
             message_body = loads(msg.data().decode().encode('latin1', 'backslashreplace').decode('unicode-escape'))
-            process_message(file_discovered_metrics, message_body, output_directory_path)
+            file_discovered_metrics.labels(message_body['move_type']).inc()
+            process_message(message_body, output_directory_path)
             # Acknowledge successful processing of the message
             consumer.acknowledge(msg)
-        except:  # noqa: E722
+            file_discovered_metrics.labels(message_body['move_type']).dec()
+        except Exception as e:  # noqa: E722
             # Message failed to be processed
             consumer.negative_acknowledge(msg)
+            logger.error("A message could not be processed", extra={'message_body': message_body, 'exception': e})
+            file_discovered_metrics.labels(message_body['move_type']).dec()
 
     client.close()
 
 
-def process_message(file_discovered_metrics, message_body, output_directory_path):
+def process_message(message_body, output_directory_path):
     # message value should be an object with {'filename':'value",'type','tv|movie'}
     # but could also be: {'source_full_path': '/tv/The 100/Season 4/The 100 - S04E01 - Echoes WEBRip-1080p.mkv',
     #     'move_type': 'to_encode', 'type': 'tv', 'quality': '1080p'}
     # move_type is common between the all message types
     logger.info("Processing new message", extra={'message_body': message_body})
     move_type = message_body['move_type']
-    file_discovered_metrics.labels(move_type).inc()
     if 'filename' in message_body:
         # filename is from the kafka message value
         filename = message_body['filename']
@@ -72,7 +75,6 @@ def process_message(file_discovered_metrics, message_body, output_directory_path
     else:
         logger.warning("{} doesn't exist on disk, skipping processing".format(full_path))
     logger.info("Done processing message", extra={'message_body': message_body})
-    file_discovered_metrics.labels(move_type).dec()
 
 
 def process_to_encode_move(full_path, message_body):
@@ -144,7 +146,12 @@ def move_tv_show(filename, full_path, move_path):
     # break up the file into it's parts for easy comparison to original file to replace
     source_file_parts = get_show_file_parts(filename)
     # move_path/show/season
-    target_dir = "{}/{}".format(find_show_directory(move_path, source_file_parts['show']), source_file_parts['season'])
+    # if the show has a season directory (non-episodic shows should not have season directories)
+    if source_file_parts['season']:
+        target_dir = "{}/{}".format(find_show_directory(move_path, source_file_parts['show']),
+                                    source_file_parts['season'])
+    else:
+        target_dir = "{}".format(find_show_directory(move_path, source_file_parts['show']))
     target_dir_exists = os.path.isdir(target_dir)
     # let's hope that the original directory is found!
     if target_dir_exists:
