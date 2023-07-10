@@ -1,5 +1,13 @@
 # Changelog
 
+## [v4.0.4](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v4.0.4) (2023-07-10)
+
+[Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v4.0.3...v4.0.4)
+
+**Fixed bugs:**
+
+- fix: show titles with - and year based seasons cause exceptions [\#261](https://github.com/chrisjohnson00/handbrake-file-mover/pull/261) ([chrisjohnson00](https://github.com/chrisjohnson00))
+
 ## [v4.0.3](https://github.com/chrisjohnson00/handbrake-file-mover/tree/v4.0.3) (2023-03-15)
 
 [Full Changelog](https://github.com/chrisjohnson00/handbrake-file-mover/compare/v4.0.2...v4.0.3)
