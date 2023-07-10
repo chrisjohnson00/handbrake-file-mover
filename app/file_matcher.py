@@ -14,7 +14,7 @@ def extract_show_from_filename(filename):
         regex_pattern = r"(.+)(S\d{1,2}E\d{1,2})(.+)"
         matches = re.match(regex_pattern, filename)
         if not matches or len(matches.groups()) < 3:
-            raise Exception("{} split with no parts returned, we will die now".format(filename))
+            raise Exception(f"{filename} split with no parts returned, we will die now (fn1)")
         else:
             ret_value = matches.group(1).replace('.', ' ')
             return replace_last(ret_value, " - ", "").strip()
@@ -43,7 +43,7 @@ def extract_season_episode_parts(filename):
         regex_pattern = r"(.+)(S\d{1,2}E\d{1,2})(.+)"
         matches = re.match(regex_pattern, filename)
         if not matches or len(matches.groups()) < 3:
-            raise Exception("{} split with no parts returned, we will die now".format(filename))
+            raise Exception(f"{filename} split with no parts returned, we will die now (fn2)")
         else:
             season_episode = matches.group(2)
     else:
@@ -75,7 +75,7 @@ def extract_episode_name_from_filename(filename):
         regex_pattern = r"(.+)(S\d{1,2}E\d{1,2})(.+)"
         matches = re.match(regex_pattern, filename)
         if not matches or len(matches.groups()) < 3:
-            raise Exception("{} split with no parts returned, we will die now".format(filename))
+            raise Exception(f"{filename} split with no parts returned, we will die now (fn3)")
         else:
             ret_value = matches.group(3)
             # if it starts with a `.` then remove it
