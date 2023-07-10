@@ -5,19 +5,20 @@ from pathlib import Path
 
 def extract_show_from_filename(filename):
     """
-    Take input like 'Shameless (US) - S01E01 - Pilot HDTV-720p.mp4' and return it's show name
+    Take input like 'Shameless (US) - S01E01 - Pilot HDTV-720p.mp4' and return its show name
     """
     filename_split = filename.split(' - ')
-    # if the file doesn't match the standard pattern
+    # if the file doesn't match the standard pattern, lets use regex to extract the show name
     if len(filename_split) != 3:
         # try 'Downton.Abbey.S05E05.HDTV.x264-FTP.mp4' style file name
-        regex_pattern = r"(.+)(S\d{1,2}E\d{1,2})(.+)"
+        regex_pattern = r"(.+)(S\d{1,4}E\d{1,2})(.+)"
         matches = re.match(regex_pattern, filename)
         if not matches or len(matches.groups()) < 3:
-            raise Exception("{} split with no parts returned, we will die now".format(filename))
+            raise Exception(f"{filename} split with no parts returned, we will die now (fn1)")
         else:
             ret_value = matches.group(1).replace('.', ' ')
             return replace_last(ret_value, " - ", "").strip()
+    # filename matches standard pattern, use the first part of the split as the show name
     else:
         return filename_split[0].strip()
 
@@ -40,10 +41,10 @@ def extract_season_episode_parts(filename):
     filename_split = filename.upper().split(' - ')
     if len(filename_split) != 3:
         # try 'Downton.Abbey.S05E05.HDTV.x264-FTP.mp4' style file name
-        regex_pattern = r"(.+)(S\d{1,2}E\d{1,2})(.+)"
+        regex_pattern = r"(.+)(S\d{1,4}E\d{1,2})(.+)"
         matches = re.match(regex_pattern, filename)
         if not matches or len(matches.groups()) < 3:
-            raise Exception("{} split with no parts returned, we will die now".format(filename))
+            raise Exception(f"{filename} split with no parts returned, we will die now (fn2)")
         else:
             season_episode = matches.group(2)
     else:
@@ -72,10 +73,10 @@ def extract_episode_name_from_filename(filename):
     filename_split = filename.split(' - ')
     if len(filename_split) != 3:
         # try 'Downton.Abbey.S05E05.HDTV.x264-FTP.mp4' style file name
-        regex_pattern = r"(.+)(S\d{1,2}E\d{1,2})(.+)"
+        regex_pattern = r"(.+)(S\d{1,4}E\d{1,2})(.+)"
         matches = re.match(regex_pattern, filename)
         if not matches or len(matches.groups()) < 3:
-            raise Exception("{} split with no parts returned, we will die now".format(filename))
+            raise Exception(f"{filename} split with no parts returned, we will die now (fn3)")
         else:
             ret_value = matches.group(3)
             # if it starts with a `.` then remove it

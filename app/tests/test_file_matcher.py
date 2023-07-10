@@ -3,20 +3,30 @@ from app.file_matcher import extract_show_from_filename, extract_episode_name_fr
 import pytest
 
 
-@pytest.mark.parametrize("test_input,expected", [('Shameless (US) - S01E01 - Pilot HDTV-720p.mp4', "Shameless (US)"),
-                                                 ('Downton.Abbey.S05E05.HDTV.x264-FTP.mp4', "Downton Abbey"), (
-                                                         'The Scooby-Doo Show - S01E06 - Scared a Lot in Camelot WEBRip-720p.mkv',  # noqa: E501
-                                                         'The Scooby-Doo Show'), (
-                                                         'Home Movie - The Princess Bride - S01E09 - Chapter Nine - Have Fun Storming The Castle! WEBDL-1080p.mkv',  # noqa: E501
-                                                         "Home Movie - The Princess Bride"),
-                                                 (
-                                                         'SpongeBob SquarePants - S10E30-E31 - Company Picnic + Pull Up a Barrel HDTV-720p.mkv',  # noqa: E501
-                                                         "SpongeBob SquarePants"),
-                                                 ('Foundation (2021) - S01E02 - Preparing to Live WEBDL-1080p.mkv',
-                                                  'Foundation (2021)'),
-                                                 ('The Daily Show - 2023-03-07 - Bomani Jones WEBDL-1080p.mkv',
-                                                  'The Daily Show')
-                                                 ])
+@pytest.mark.parametrize("test_input,expected", [
+    ('Shameless (US) - S01E01 - Pilot HDTV-720p.mp4', "Shameless (US)"),
+    ('Downton.Abbey.S05E05.HDTV.x264-FTP.mp4', "Downton Abbey"),
+    (
+            'The Scooby-Doo Show - S01E06 - Scared a Lot in Camelot WEBRip-720p.mkv',
+            # noqa: E501
+            'The Scooby-Doo Show'),
+    (
+            'Home Movie - The Princess Bride - S01E09 - Chapter Nine - Have Fun Storming The Castle! WEBDL-1080p.mkv',
+            # noqa: E501
+            "Home Movie - The Princess Bride"),
+    (
+            'SpongeBob SquarePants - S10E30-E31 - Company Picnic + Pull Up a Barrel HDTV-720p.mkv',
+            # noqa: E501
+            "SpongeBob SquarePants"),
+    ('Foundation (2021) - S01E02 - Preparing to Live WEBDL-1080p.mkv',
+     'Foundation (2021)'),
+    ('The Daily Show - 2023-03-07 - Bomani Jones WEBDL-1080p.mkv',
+     'The Daily Show'),
+    (
+            'MythBusters - S2014E01 - Star Wars - Revenge of the Myth WEBDL-1080p.mkv',
+            'MythBusters'),
+    ('MythBusters - S2013E05 - Battle of the Sexes - Round 2 WEBDL-1080p.mkv', 'MythBusters')
+])
 def test_extract_show_from_filename(test_input, expected):
     assert expected == extract_show_from_filename(test_input)
 
