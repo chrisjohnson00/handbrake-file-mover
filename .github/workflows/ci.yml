@@ -6,7 +6,7 @@ on:
 
 jobs:
   lint:
-    runs-on: 'ubuntu-20.04'
+    runs-on: ubuntu-latest
     name: 'Python Lint'
     container:
       image: 'python:3.11-slim'
@@ -22,7 +22,7 @@ jobs:
         run: |
           python -m flake8 --exclude venv --max-line-length 120
   test:
-    runs-on: 'ubuntu-20.04'
+    runs-on: ubuntu-latest
     name: 'Python Tests'
     container:
       image: 'python:3.11-slim'
@@ -41,7 +41,7 @@ jobs:
   container_build:
     needs: ['lint', 'test']
     name: 'Build and Push Docker Container'
-    runs-on: 'ubuntu-20.04'
+    runs-on: ubuntu-latest
     steps:
       - uses: 'actions/checkout@v3'
       - name: 'Get calculated next version based on commit history'
@@ -115,7 +115,7 @@ jobs:
             org.opencontainers.image.revision=${{ github.sha }}
   yaml_lint:
     name: 'Yaml Lint'
-    runs-on: 'ubuntu-20.04'
+    runs-on: ubuntu-latest
     steps:
       - name: 'Checkout'
         uses: 'actions/checkout@v3'
