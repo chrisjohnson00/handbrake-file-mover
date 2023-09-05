@@ -11,7 +11,7 @@ jobs:
     container:
       image: 'python:3.11-slim'
     steps:
-      - uses: 'actions/checkout@v3'
+      - uses: 'actions/checkout@v4'
       - name: 'Install dependencies'
         run: |
           echo "Installing CI requirements"
@@ -27,7 +27,7 @@ jobs:
     container:
       image: 'python:3.11-slim'
     steps:
-      - uses: 'actions/checkout@v3'
+      - uses: 'actions/checkout@v4'
       - name: 'Install dependencies'
         run: |
           echo "Installing CI requirements"
@@ -43,7 +43,7 @@ jobs:
     name: 'Build and Push Docker Container'
     runs-on: ubuntu-latest
     steps:
-      - uses: 'actions/checkout@v3'
+      - uses: 'actions/checkout@v4'
       - name: 'Get calculated next version based on commit history'
         id: 'calculated-next-version'
         uses: 'mathieudutour/github-tag-action@v6.1'
@@ -118,7 +118,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout'
-        uses: 'actions/checkout@v3'
+        uses: 'actions/checkout@v4'
       - name: 'Yaml Lint'
         uses: 'karancode/yamllint-github-action@v2.1.1'
         with:
